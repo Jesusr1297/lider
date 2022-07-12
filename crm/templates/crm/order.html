@@ -1,0 +1,7 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+    {% for order in orders %}
+        <h1>{{ order.lider }}   -   {{ order.customer }}    -    {{ order.date_ordered }}</h1>
+    {% endfor %}
+
+{% endblock %}
