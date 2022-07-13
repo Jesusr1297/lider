@@ -1,0 +1,17 @@
+body {
+  background: whitesmoke;
+  color: #333333;
+  margin-top: 5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: dimgray;
+}
+
+.col{
+  border: 1px solid rgba(39,41,43,0.03);
+}
+
+.header-links{
+  font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+}

@@ -1,10 +1,7 @@
-from django.shortcuts import render
-from .models import (Order, Lider, Customer)
+from django.views.generic import ListView
+from .models import *
 
 
-# Create your views here.
-def test_view(request):
-    context = {
-        'orders': Order.objects.all()
-    }
-    return render(request, template_name='crm/order.html', context=context)
+class OrderView(ListView):
+    model = Order
+    template_name = 'crm/order.html'

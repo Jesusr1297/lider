@@ -1,7 +1,10 @@
 {% extends 'crm/base.html' %}
+{% load render_table from django_tables2 %}
 {% block content %}
-    {% for order in orders %}
-        <h1>{{ order.lider }}   -   {{ order.customer }}    -    {{ order.date_ordered }}</h1>
-    {% endfor %}
+    <h1>Ordenes</h1>
+
+    {% render_table object_list %}
+
+
 
 {% endblock %}
