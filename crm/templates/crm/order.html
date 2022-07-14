@@ -16,11 +16,9 @@
             <div class="col-1 mx-4 my-auto">{{ order.lider }}</div>
             <div class="col mx-auto my-auto">{{ order.customer }}</div>
             <div class="col my-auto">{{ order.date_ordered }}</div>
-            <div class="col-1"> <button class="btn" type="submit">Detalles</button></div>
-            <div class="col-1"> <button class="btn" type="submit">Editar</button></div>
-            <div class="col-1"> <button class="btn" type="submit">Eliminar</button></div>
+            <div class="col-1"> <a href="{% url 'order-detail' order.id %}" class="btn">Detalles</a></div>
+            <div class="col-1"> <a href="#" class="btn">Editar</a></div>
+            <div class="col-1"> <a href="#" class="btn">Eliminar</a></div>
         </div>
     {% endfor %}
-
-
 {% endblock %}

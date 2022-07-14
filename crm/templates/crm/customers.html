@@ -1,0 +1,23 @@
+{% extends 'crm/base.html' %}
+
+{% block content %}
+    <div class="row mb-4">
+        <div class="col ms-4">
+        <h1>Clientes</h1>
+        </div>
+        <div class="col-auto">
+                <h4><button class="btn">Nuevo Cliente</button></h4>
+        </div>
+    </div>
+
+    {% for customer in object_list %}
+        <div class="row mb-2">
+            <div class="col-1 mx-4 my-auto">{{ customer.name_company }}</div>
+            <div class="col mx-auto my-auto">{{ customer.email }}</div>
+            <div class="col my-auto">{{ customer.phone_number }}</div>
+            <div class="col-1"> <a href="#" class="btn">Detalles</a></div>
+            <div class="col-1"> <a href="#" class="btn">Editar</a></div>
+            <div class="col-1"> <a href="#" class="btn">Eliminar</a></div>
+        </div>
+    {% endfor %}
+{% endblock content %}

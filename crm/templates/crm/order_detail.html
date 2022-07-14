@@ -1,0 +1,13 @@
+{% extends 'crm/base.html' %}
+
+{% block content %}
+    <div class="row my-4">
+        <div class="col mx-4">
+            <h1>Orden {{ object.id|stringformat:"03d"}}</h1>
+        </div>
+    </div>
+
+    <h4 class="text mx-4">Lider: {{ object.lider }}</h4>
+    <text class="fw-light" style="margin-left: 1rem">{{ object.customer }}</text>
+
+{% endblock %}
