@@ -1,10 +1,26 @@
 {% extends 'crm/base.html' %}
 {% load render_table from django_tables2 %}
 {% block content %}
-    <h1>Ordenes</h1>
+    <div class="row mb-4">
+        <div class="col ms-4">
+        <h1>Ordenes</h1>
+        </div>
+        <div class="col-auto">
+                <h4><button class="btn">Nueva Orden</button></h4>
+        </div>
+    </div>
 
-    {% render_table object_list %}
-
+{#    {% render_table object_list %}#}
+    {% for order in object_list %}
+        <div class="row mb-2">
+            <div class="col-1 mx-4 my-auto">{{ order.lider }}</div>
+            <div class="col mx-auto my-auto">{{ order.customer }}</div>
+            <div class="col my-auto">{{ order.date_ordered }}</div>
+            <div class="col-1"> <button class="btn" type="submit">Detalles</button></div>
+            <div class="col-1"> <button class="btn" type="submit">Editar</button></div>
+            <div class="col-1"> <button class="btn" type="submit">Eliminar</button></div>
+        </div>
+    {% endfor %}
 
 
 {% endblock %}
