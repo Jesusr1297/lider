@@ -6,7 +6,7 @@
         <h1>Ordenes</h1>
         </div>
         <div class="col-auto">
-                <h4><button class="btn">Nueva Orden</button></h4>
+                <h4><a class="btn" href="{% url 'order-create' %}">Nueva Orden</a></h4>
         </div>
     </div>
 
@@ -17,8 +17,8 @@
             <div class="col mx-auto my-auto">{{ order.customer }}</div>
             <div class="col my-auto">{{ order.date_ordered }}</div>
             <div class="col-1"> <a href="{% url 'order-detail' order.id %}" class="btn">Detalles</a></div>
-            <div class="col-1"> <a href="#" class="btn">Editar</a></div>
-            <div class="col-1"> <a href="#" class="btn">Eliminar</a></div>
+            <div class="col-1"> <a href="{% url 'order-update' order.id %}" class="btn">Editar</a></div>
+            <div class="col-1"> <a href="{% url 'order-delete' order.id %}" class="btn">Eliminar</a></div>
         </div>
     {% endfor %}
 {% endblock %}

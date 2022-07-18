@@ -1,0 +1,7 @@
+{% extends 'crm/base.html' %}
+
+{% block content %}
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+{% endblock %}

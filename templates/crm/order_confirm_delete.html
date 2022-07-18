@@ -1,0 +1,8 @@
+<form method="post">
+    {% csrf_token %}
+    <p>Estas seguro que deseas eliminar {{ order.id}}?</p>
+    <p> De {{ order.customer }}</p>
+    <p> Hecha el {{ order.date_ordered }}</p>
+    {{ form }}
+    <input type="submit" value="Confirm">
+</form>
