@@ -1,7 +1,7 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import *
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 
 class OrderView(ListView):
@@ -13,9 +13,7 @@ class OrderView(ListView):
 class OrderCreateView(CreateView):
     model = Order
     fields = ['lider', 'customer', 'quantity_ordered']
-
-    def get_success_url(self):
-        return reverse('home')
+    success_url = reverse_lazy('home')
 
 
 class OrderDetailView(DetailView):
@@ -25,16 +23,12 @@ class OrderDetailView(DetailView):
 class OrderUpdateView(UpdateView):
     model = Order
     fields = '__all__'
-
-    def get_success_url(self):
-        return reverse('home')
+    success_url = reverse_lazy('home')
 
 
 class OrderDeleteView(DeleteView):
     model = Order
-
-    def get_success_url(self):
-        return reverse('home')
+    success_url = reverse_lazy('home')
 
 
 class CustomersView(ListView):
