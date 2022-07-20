@@ -10,7 +10,12 @@
         </div>
     </div>
 
-{#    {% render_table object_list %}#}
+{% if messages %}
+    {% for message in messages %}
+        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
     {% for order in object_list %}
         <div class="row mb-2">
             <div class="col-1 mx-4 my-auto">{{ order.lider }}</div>

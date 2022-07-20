@@ -1,7 +1,10 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import *
 from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 
 class OrderView(ListView):
@@ -20,15 +23,26 @@ class OrderDetailView(DetailView):
     model = Order
 
 
-class OrderUpdateView(UpdateView):
+class OrderUpdateView(SuccessMessageMixin, UpdateView):
+
     model = Order
     fields = '__all__'
     success_url = reverse_lazy('home')
+    success_message = 'Se ha actualizado la orden'
 
 
 class OrderDeleteView(DeleteView):
     model = Order
-    success_url = reverse_lazy('home')
+    """
+    Se puede usar directamente success_url para regresar al menu principal, 
+    pero al nosotros querer agregar un mensaje, sobre escribimos el metodo
+    y agregamos el mensaje en get_success_url
+    """
+    # success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        messages.warning(self.request, f'Se ha eliminado la orden: {self.object.id:03d}')
+        return reverse_lazy('home')
 
 
 class CustomersView(ListView):
