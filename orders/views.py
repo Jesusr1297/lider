@@ -1,4 +1,3 @@
-from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import *
 from django.shortcuts import render
@@ -9,26 +8,34 @@ from django.contrib import messages
 
 class OrderView(ListView):
     model = Order
-    template_name = 'crm/order.html'
+    template_name = 'orders/order.html'
     ordering = ['-id']
 
 
-class OrderCreateView(CreateView):
+class OrderCreateView(SuccessMessageMixin, CreateView):
     model = Order
     fields = ['lider', 'customer', 'quantity_ordered']
     success_url = reverse_lazy('home')
+    success_message = 'Se ha creado una nueva orden'
 
 
 class OrderDetailView(DetailView):
     model = Order
 
 
-class OrderUpdateView(SuccessMessageMixin, UpdateView):
-
+class OrderUpdateView(UpdateView):
     model = Order
     fields = '__all__'
-    success_url = reverse_lazy('home')
-    success_message = 'Se ha actualizado la orden'
+
+    """
+    Se utiliza la funcion get_success_url en lugar del metodo success_url para poder agregar
+    el mensaje de actualizacion en el color que necesitamos, ya que SuccessMessageMixin solo 
+    nos permite agregar mensajes de SUCCESS, en esto caso nosotros queremos uno de INFO.
+    """
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Se ha actualizado la orden')
+        return reverse_lazy('home')
 
 
 class OrderDeleteView(DeleteView):
@@ -41,25 +48,5 @@ class OrderDeleteView(DeleteView):
     # success_url = reverse_lazy('home')
 
     def get_success_url(self):
-        messages.warning(self.request, f'Se ha eliminado la orden: {self.object.id:03d}')
+        messages.error(self.request, f'Se ha eliminado la orden: {self.object.id:03d}')
         return reverse_lazy('home')
-
-
-class CustomersView(ListView):
-    model = Customer
-    template_name = 'crm/customers.html'
-
-
-class LiderView(ListView):
-    model = Lider
-    template_name = 'crm/lider.html'
-
-
-# class BudgetView(ListView):
-#     model =
-#     template_name = 'crm/budget.html'
-
-def budget(request):
-    return render(request, 'crm/budget.html')
-
-

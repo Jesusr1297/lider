@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crm',
+    'orders', 'customers', 'lider',
     'django_tables2',
     'crispy_forms'
 ]
@@ -122,6 +122,10 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MESSAGE_TAGS = {
-    message_constants.SUCCESS: 'alert alert-primary',
-    message_constants.WARNING: 'alert alert-danger'
+    message_constants.DEBUG: 'alert alert-secondary',
+    message_constants.INFO: 'alert alert-primary',
+    message_constants.SUCCESS: 'alert alert-success',
+    message_constants.WARNING: 'alert alert-warning',
+    message_constants.ERROR: 'alert alert-danger',
+
 }

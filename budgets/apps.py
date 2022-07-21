@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CrmConfig(AppConfig):
+class BudgetsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'crm'
+    name = 'budgets'
