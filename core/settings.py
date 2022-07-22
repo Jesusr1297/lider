@@ -37,9 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'orders', 'customers', 'lider',
-    'django_tables2',
-    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +128,5 @@ MESSAGE_TAGS = {
     message_constants.ERROR: 'alert alert-danger',
 
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

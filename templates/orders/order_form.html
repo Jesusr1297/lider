@@ -1,10 +1,20 @@
 {% extends 'orders/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
+    <div class="container">
+        <div class="row justify-content-center">
+            <form method="post" class="form-group col-md-4 col-md-offset-5 align-center">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="submit" value="Save">
+        </form>
+  </div>
+ </div>
 
-    </form>
+
+
+
+
+
 {% endblock %}

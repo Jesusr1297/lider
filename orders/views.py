@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.db.models import Q
 
 
 class OrderView(ListView):
@@ -14,7 +15,7 @@ class OrderView(ListView):
 
 class OrderCreateView(SuccessMessageMixin, CreateView):
     model = Order
-    fields = ['lider', 'customer', 'quantity_ordered']
+    fields = ['lider_id', 'customer', 'quantity_ordered']
     success_url = reverse_lazy('home')
     success_message = 'Se ha creado una nueva orden'
 
@@ -50,3 +51,25 @@ class OrderDeleteView(DeleteView):
     def get_success_url(self):
         messages.error(self.request, f'Se ha eliminado la orden: {self.object.id:03d}')
         return reverse_lazy('home')
+
+
+def search_view(request):
+    if request.method == 'GET' and request.GET.get('q') is not '':
+        q = request.GET.get('q') if request.GET.get('q') is not None else ''
+        orders = Order.objects.filter(Q(customer__name_company__icontains=q) |
+                                      Q(lider_id__lider_id__icontains=q))
+        customers = Customer.objects.filter(Q(name_company__icontains=q))
+        lider = Lider.objects.filter(Q(lider_id__icontains=q) |
+                                     Q(doc_description__icontains=q) |
+                                     Q(doc_inks__icontains=q))
+
+        context = {
+            'orders': orders,
+            'customers': customers,
+            'lider': lider
+        }
+    else:
+        context = {}
+
+    return render(request, 'search/search.html', context)
+

@@ -1,7 +1,8 @@
 {% extends 'orders/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <input type="submit" value="Update">
 {% endblock %}
