@@ -64,7 +64,7 @@ def search_view(request):
                                      Q(doc_inks__icontains=q))
 
         context = {
-            'orders': orders,
+            'orders': orders.order_by('-id'),
             'customers': customers,
             'lider': lider
         }

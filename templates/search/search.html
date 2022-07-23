@@ -1,34 +1,41 @@
 {% extends 'orders/base.html' %}
 
 {% block content %}
+    <div class="mx-4 my-4">
+        {% if orders %}
+            <h1>Ordenes</h1>
+            {% for order in orders %}
+                <div class="row my-4">
+                    <a href="{% url 'order-detail' order.id %}" class="col mx-4 link-dark">{{ order.id | stringformat:'03d'}}</a>
+                    <a href="#" class="col link-dark">{{ order.lider_id }}</a>
+                    <a class="col link-dark">{{ order.customer }}</a>
+                    <div class="col">{{ order.date_ordered }}</div>
+                </div>
+            {% endfor %}
+        {% endif %}
 
-    {% if orders %}
-        <div class="row my-4">
-        <h1>Ordenes</h1>
-        {% for order in orders %}
-            <p>{{ order.id | stringformat:'03d'}} - {{ order.customer }} - {{ order.date_ordered }} - {{ order.lider_id }}</p>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if lider %}
-        <div class="row my-4">
+        {% if lider %}
             <h1>Trabajos</h1>
             {% for l in lider %}
-                <p>{{ l.lider_id}} - {{ l.customer|title}} - {{ l.doc_description|title }} - {{ l.doc_inks|title }}</p>
+                <div class="row my-4">
+                    <a href='#' class="col mx-4 link-dark">{{ l.lider_id }}</a>
+                    <a class="col link-dark">{{ l.customer|title }}</a>
+                    <div class="col">{{ l.doc_description|title}}</div>
+                    <div class="col">{{ l.doc_inks|title }}</div>
+                </div>
             {% endfor %}
-    </div>
-    {% endif %}
+        {% endif %}
 
-    {% if customers %}
-        <div class="row mb-4">
-        <h1>Clientes</h1>
+        {% if customers %}
+            <h1>Clientes</h1>
             {% for customer in customers %}
-                <p>{{ customer.name_company }} - {{ customer.email }} - {{ customer.phone_number }}</p>
+                <div class="row mb-4">
+                    <a href="#" class="col mx-4 link-dark">{{ customer.name_company }}</a>
+                    <div class="col">{{ customer.email }}</div>
+                    <div class="col">{{ customer.phone_number}}</div>
+                </div>
             {% endfor %}
+        {% endif %}
+
     </div>
-    {% endif %}
-
-
-
 {% endblock %}
