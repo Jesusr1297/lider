@@ -6,14 +6,14 @@
         <h1>Trabajos</h1>
         </div>
         <div class="col-auto">
-                <h4><button class="btn">Nuevo Cliente</button></h4>
+                <h4><button class="btn">Nuevo Trabajo</button></h4>
         </div>
     </div>
 
     {% for trabajo in object_list %}
         <div class="row mb-2 mx-auto">
             <div class="col-1 mx-4 my-auto">{{ trabajo.lider_id}}</div>
-            <div class="col mx-auto my-auto">{{trabajo.customer}}</div>
+            <a class="col mx-auto my-auto link-dark" href="{% url 'customer-detail' trabajo.customer.id %}">{{trabajo.customer}}</a>
             <div class="col my-auto mx-auto">{{trabajo.doc_description}}</div>
             <div class="col-1"> <a href="#" class="btn">Detalles</a></div>
             <div class="col-1"> <a href="#" class="btn">Editar</a></div>

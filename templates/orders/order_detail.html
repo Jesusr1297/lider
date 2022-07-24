@@ -2,13 +2,15 @@
 
 {% block content %}
     <div class="row my-4">
-        <div class="col mx-4">
+        <div class="col text-center">
             <h1>Orden {{ object.id|stringformat:"03d"}}</h1>
         </div>
     </div>
 
-    <h4 class="text mx-4">Lider: {{ object.lider }}</h4>
-    <text class="fw-light" style="margin-left: 1rem">{{ object.customer }}</text>
-    <text class="fw-light" style="margin-left: 1rem">{{ object.quantity_ordered }}</text>
+    <div class="container text-center">
+        <h4 class="fw-light">{{ object.lider_id }}</h4>
+        <h4 class="fw-light" style="margin-left: 1rem">{{ object.customer }}</h4>
+        <h4 class="fw-light">{{ object.quantity_ordered }}</h4>
+    </div>
 
 {% endblock %}

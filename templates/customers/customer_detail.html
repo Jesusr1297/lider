@@ -1,0 +1,17 @@
+{% extends 'orders/base.html' %}
+
+{% block content %}
+    <div class="row my-4">
+        <div class="col text-center">
+            <h1>{{ object.name_company}}</h1>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <h4 class="fw-light mx-4 my-4 justify-content-center">{{ object.email }}</h4>
+        <h4 class="fw-light mx-4 my-4" style="margin-left: 1rem">{{ object.phone_number }}</h4>
+        <h4 class="fw-light mx-4 my-4" style="margin-left: 1rem">{{ object.address }}</h4>
+        <h4 class="fw-light mx-4 my-4" style="margin-left: 1rem">{% if object.shipping %} Entrega a Domicilio {% else %} Recoge en Tienda{% endif %}</h4>
+    </div>
+
+{% endblock %}

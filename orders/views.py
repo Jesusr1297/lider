@@ -72,4 +72,3 @@ def search_view(request):
         context = {}
 
     return render(request, 'search/search.html', context)
-

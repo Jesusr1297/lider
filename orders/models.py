@@ -20,7 +20,8 @@ class Customer(models.Model):
 class Lider(models.Model):
     lider_id = models.CharField('Numero de Lider', max_length=4,
                                 validators=[RegexValidator(r'^\d{1,10}$')], primary_key=True)
-    doc_description = models.CharField(verbose_name='Descripcion del documento', max_length=250, default='NOTA DE VENTA')
+    doc_description = models.CharField(verbose_name='Descripcion del documento',
+                                       max_length=250, default='NOTA DE VENTA')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default='')
     doc_inks = models.CharField(max_length=14, choices=[('negra', 'NEGRA'),
                                                         ('reflex', 'AZUL REFLEX'),
