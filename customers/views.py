@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView, CreateView, DetailView
+from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView
 
 from orders.models import *
 
@@ -32,4 +32,13 @@ class CustomerUpdateView(UpdateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Se ha actualizado cliente correctamente')
+        return reverse_lazy('customers')
+
+
+class CustomerDeleteView(DeleteView):
+    model = Customer
+    template_name = 'customers/customer_confirm_delete.html'
+
+    def get_success_url(self):
+        messages.error(self.request, f'Se ha eliminado al cliente: {self.object.name_company}')
         return reverse_lazy('customers')

@@ -7,9 +7,7 @@
         <div class="row justify-content-center">
             <form method="post" class="form-group col-md-4 col-md-offset-5 align-center">
                 {% csrf_token %}
-                <h2>Estas seguro que deseas eliminar la orden {{ order.id|stringformat:"03d"}}?</h2>
-                <h4> De {{ order.customer }}</h4>
-                <h4> Hecha el {{ order.date_ordered }}</h4>
+                <h2>Estas a punto de eliminar al cliente {{ customer.name_company}}</h2>
                 {{ form|crispy }}
                 <input type="submit" value="Confirm" class="btn">
             </form>
