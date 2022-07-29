@@ -12,7 +12,7 @@
 
     {% for trabajo in object_list %}
         <div class="row mb-2 mx-auto">
-            <div class="col-1 mx-4 my-auto">{{ trabajo.lider_id}}</div>
+            <a class="col-1 mx-4 my-auto link-dark" href="#">{{ trabajo.lider_id}}</a>
             <a class="col mx-auto my-auto link-dark" href="{% url 'customer-detail' trabajo.customer.id %}">{{trabajo.customer}}</a>
             <div class="col my-auto mx-auto">{{trabajo.doc_description}}</div>
             <div class="col-1"> <a href="#" class="btn">Detalles</a></div>
