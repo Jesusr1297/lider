@@ -1,7 +1,8 @@
+from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from orders.models import Lider
 
@@ -9,6 +10,7 @@ from orders.models import Lider
 class LiderView(ListView):
     model = Lider
     template_name = 'lider/lider.html'
+    ordering = ['-lider_id']
 
 
 class LiderCreateView(SuccessMessageMixin, CreateView):
@@ -24,3 +26,20 @@ class LiderDetailView(DetailView):
     template_name = 'lider/lider_detail.html'
 
 
+class LiderUpdateView(UpdateView):
+    model = Lider
+    template_name = 'lider/lider_update.html'
+    fields = '__all__'
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Se ha actualizado LIDER')
+        return reverse_lazy('lider')
+
+
+class LiderDeleteView(DeleteView):
+    model = Lider
+    template_name = 'lider/lider_confirm_delete.html'
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.ERROR, f'Se ha eliminado LIDER {self.object.lider_id}')
+        return reverse_lazy('lider')

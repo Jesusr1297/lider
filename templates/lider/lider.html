@@ -22,8 +22,8 @@
             <a class="col mx-auto my-auto link-dark" href="{% url 'customer-detail' trabajo.customer.id %}">{{trabajo.customer}}</a>
             <div class="col my-auto mx-auto">{{trabajo.doc_description}}</div>
             <div class="col-1"> <a href="{% url 'lider-detail' trabajo.lider_id %}" class="btn">Detalles</a></div>
-            <div class="col-1"> <a href="#" class="btn">Editar</a></div>
-            <div class="col-1"> <a href="#" class="btn">Eliminar</a></div>
+            <div class="col-1"> <a href="{% url 'lider-update' trabajo.lider_id %}" class="btn">Editar</a></div>
+            <div class="col-1"> <a href="{% url 'lider-delete' trabajo.lider_id %}" class="btn">Eliminar</a></div>
         </div>
     {% endfor %}
 {% endblock content%}
