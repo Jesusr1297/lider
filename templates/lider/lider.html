@@ -6,16 +6,22 @@
         <h1>Trabajos</h1>
         </div>
         <div class="col-auto">
-                <h4><button class="btn">Nuevo Trabajo</button></h4>
+                <h4><a class="btn" href="{% url 'lider-create' %}">Nuevo Trabajo</a></h4>
         </div>
     </div>
 
+    {% if messages %}
+        {% for message in messages %}
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
     {% for trabajo in object_list %}
         <div class="row mb-2 mx-auto">
-            <a class="col-1 mx-4 my-auto link-dark" href="#">{{ trabajo.lider_id}}</a>
+            <a class="col-1 mx-4 my-auto link-dark" href="{% url 'lider-detail' trabajo.lider_id %}">{{ trabajo.lider_id}}</a>
             <a class="col mx-auto my-auto link-dark" href="{% url 'customer-detail' trabajo.customer.id %}">{{trabajo.customer}}</a>
             <div class="col my-auto mx-auto">{{trabajo.doc_description}}</div>
-            <div class="col-1"> <a href="#" class="btn">Detalles</a></div>
+            <div class="col-1"> <a href="{% url 'lider-detail' trabajo.lider_id %}" class="btn">Detalles</a></div>
             <div class="col-1"> <a href="#" class="btn">Editar</a></div>
             <div class="col-1"> <a href="#" class="btn">Eliminar</a></div>
         </div>
