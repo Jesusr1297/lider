@@ -10,6 +10,7 @@ class CustomersView(ListView):
     model = Customer
     template_name = 'customers/customers.html'
     ordering = ['-id']
+    paginate_by = 2
 
 
 class CustomerDetailView(DetailView):

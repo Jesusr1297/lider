@@ -46,7 +46,55 @@
     
     {% endblock %}
     </body>
+    <footer>
+    {% if is_paginated %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center my-4">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link link-dark" href="?page=1">&laquoPrincipio</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link link-dark" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="{{ page_obj.start_index }}">&laquoPrincipio</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link">Anterior</a>
+                    </li>
+                {% endif %}
 
+
+                <li class="page-item"><a class="page-link font-weight-bold link-dark" href="#">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link link-dark" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link link-dark" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link">Siguiente</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+
+
+
+
+
+
+    </footer>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'crm/main.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">

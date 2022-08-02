@@ -11,6 +11,7 @@ class OrderView(ListView):
     model = Order
     template_name = 'orders/order.html'
     ordering = ['-id']
+    paginate_by = 2
 
 
 class OrderCreateView(SuccessMessageMixin, CreateView):
