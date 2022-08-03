@@ -7,8 +7,8 @@
             {% for order in orders %}
                 <div class="row my-4">
                     <a href="{% url 'order-detail' order.id %}" class="col mx-4 link-dark">{{ order.id | stringformat:'03d'}}</a>
-                    <a href="#" class="col link-dark">{{ order.lider_id }}</a>
-                    <a class="col link-dark">{{ order.customer }}</a>
+                    <a href="{% url 'lider-detail' order.lider_id %}" class="col link-dark">{{ order.lider_id }}</a>
+                    <a href="{% url 'customer-detail' order.customer.id %}" class="col link-dark">{{ order.customer }}</a>
                     <div class="col">{{ order.date_ordered }}</div>
                 </div>
             {% endfor %}
@@ -18,8 +18,8 @@
             <h1>Trabajos</h1>
             {% for l in lider %}
                 <div class="row my-4">
-                    <a href='#' class="col mx-4 link-dark">{{ l.lider_id }}</a>
-                    <a class="col link-dark">{{ l.customer|title }}</a>
+                    <a href='{% url 'lider-detail' l.lider_id %}' class="col mx-4 link-dark">{{ l.lider_id }}</a>
+                    <a href="{% url 'customer-detail' l.customer.id %}" class="col link-dark">{{ l.customer|title }}</a>
                     <div class="col">{{ l.doc_description|title}}</div>
                     <div class="col">{{ l.doc_inks|title }}</div>
                 </div>
@@ -30,7 +30,7 @@
             <h1>Clientes</h1>
             {% for customer in customers %}
                 <div class="row mb-4">
-                    <a href="#" class="col mx-4 link-dark">{{ customer.name_company }}</a>
+                    <a href="{% url 'customer-detail' customer.id %}" class="col mx-4 link-dark">{{ customer.name_company }}</a>
                     <div class="col">{{ customer.email }}</div>
                     <div class="col">{{ customer.phone_number}}</div>
                 </div>
