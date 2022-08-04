@@ -3,6 +3,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from orders.models import Lider
 
@@ -37,9 +39,12 @@ class LiderUpdateView(UpdateView):
         return reverse_lazy('lider')
 
 
-class LiderDeleteView(DeleteView):
+class LiderDeleteView(LoginRequiredMixin, DeleteView):
     model = Lider
     template_name = 'lider/lider_confirm_delete.html'
+
+    # TODO login view
+    login_url = 'login'
 
     def get_success_url(self):
         messages.add_message(self.request, messages.ERROR, f'Se ha eliminado LIDER {self.object.lider_id}')
