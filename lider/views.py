@@ -43,7 +43,6 @@ class LiderDeleteView(LoginRequiredMixin, DeleteView):
     model = Lider
     template_name = 'lider/lider_confirm_delete.html'
 
-    # TODO login view
     login_url = 'login'
 
     def get_success_url(self):

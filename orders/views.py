@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import *
 from django.shortcuts import render
@@ -40,7 +41,7 @@ class OrderUpdateView(UpdateView):
         return reverse_lazy('home')
 
 
-class OrderDeleteView(DeleteView):
+class OrderDeleteView(LoginRequiredMixin, DeleteView):
     model = Order
     """
     Se puede usar directamente success_url para regresar al menu principal, 

@@ -1,0 +1,9 @@
+{% extends 'orders/base.html' %}
+{% block content %}
+    <h2>Has cerrado sesion</h2>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a href="{% url 'login' %}">Deseas iniciar sesion otra vez?</a>
+        </small>
+    </div>
+{% endblock content %}

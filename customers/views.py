@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView
@@ -36,7 +37,7 @@ class CustomerUpdateView(UpdateView):
         return reverse_lazy('customers')
 
 
-class CustomerDeleteView(DeleteView):
+class CustomerDeleteView(LoginRequiredMixin, DeleteView):
     model = Customer
     template_name = 'customers/customer_confirm_delete.html'
 
