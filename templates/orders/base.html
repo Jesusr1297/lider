@@ -32,13 +32,19 @@
         <ul class="navbar-nav justify-content-end mb-2 mb-lg-0 mx-4">
             <li class="nav-item dropdown justify-content-end">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Usuarios
+                    {% if user.is_authenticated %}
+                        {{ user }}
+                    {% else %}
+                        Usuarios
+                    {% endif %}
                 </a>
 
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <ul class="dropdown-menu">
+                {% if user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesion</a></li>
+                {% else %}
+                    <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesion</a></li>
+                    {% endif %}
                 </ul>
             </li>
         </ul>
