@@ -38,13 +38,15 @@
                         Usuarios
                     {% endif %}
                 </a>
-
-            <ul class="dropdown-menu">
-                {% if user.is_authenticated %}
-                    <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesion</a></li>
-                {% else %}
-                    <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesion</a></li>
+                <ul class="dropdown-menu">
+                    {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesion</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesion</a></li>
                     {% endif %}
+
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'register' %}">Registrarse</a></li>
                 </ul>
             </li>
         </ul>

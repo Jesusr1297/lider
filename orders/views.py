@@ -1,11 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import *
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.db.models import Q
+from .forms import UserRegisterForm
+
 
 
 class OrderView(ListView):
@@ -74,3 +76,16 @@ def search_view(request):
         context = {}
 
     return render(request, 'search/search.html', context)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'La cuenta {username} se ha creado exitosamente. Puedes iniciar sesion')
+            return redirect('login')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'registration/register.html', {'form': form})
