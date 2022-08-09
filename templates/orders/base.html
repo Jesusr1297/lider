@@ -43,10 +43,9 @@
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesion</a></li>
                     {% else %}
                         <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesion</a></li>
-                    {% endif %}
-
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'register' %}">Registrarse</a></li>
+                    {% endif %}
                 </ul>
             </li>
         </ul>

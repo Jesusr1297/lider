@@ -43,3 +43,12 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.id:03d} {self.lider_id} {str(self.customer).title()}'
+
+
+class Materials(models.Model):
+    name = models.TextField(max_length=100, verbose_name='Nombre del Material')
+    quantity_ordered = models.IntegerField(verbose_name='Cantidad')
+    price = models.FloatField(verbose_name='Precio')
+
+    def __str__(self):
+        return self.name
