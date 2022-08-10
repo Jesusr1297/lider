@@ -1,0 +1,34 @@
+{% extends 'orders/base.html' %}
+
+{% block content %}
+   <div class="row mb-4">
+        <div class="col ms-4">
+            <h1>Materiales</h1>
+        </div>
+
+        <div class="col-auto">
+            <a class="btn mx-4" href="{% url 'material-create' %}">Agregar Material</a>
+        </div>
+    </div>
+
+
+    {% if messages %}
+        {% for message in messages %}
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+
+    {% for material in object_list %}
+        <div class="row mb-2">
+            <a class="col mx-4 my-auto link-dark" href="#">{{ material.name }}</a>
+            <div class="col mx-auto my-auto">{{ material.size }}</div>
+            <div class="col my-auto">{{ material.quantity_ordered|floatformat:"g" }}</div>
+            <div class="col my-auto text-center">{{ material.price|floatformat:"2g" }}</div>
+            <div class="col my-auto">???</div>
+            <div class="col-1"> <a href="#" class="btn">Detalles</a></div>
+            <div class="col-1"> <a href="#" class="btn">Editar</a></div>
+            <div class="col-1"> <a href="#" class="btn">Eliminar</a></div>
+        </div>
+    {% endfor %}
+{% endblock content %}

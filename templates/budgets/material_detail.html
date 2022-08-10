@@ -7,8 +7,17 @@
         </div>
 
         <div class="col-auto">
-            <a class="btn" href="#">Agregar Material</a>
+            <a class="btn mx-4" href="{% url 'material-create' %}">Agregar Material</a>
         </div>
+    </div>
 
+    {% for object in materials %}
+        {{ object.name }}
+    {% endfor %}
+
+    <div class="container text-center">
+        <h4 class="fw-light">{{ object.name }}</h4>
+        <h4 class="fw-light" style="margin-left: 1rem">{{ object.customer }}</h4>
+        <h4 class="fw-light">{{ object.quantity_ordered }}</h4>
     </div>
 {% endblock %}

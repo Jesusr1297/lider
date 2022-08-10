@@ -46,9 +46,14 @@ class Order(models.Model):
 
 
 class Materials(models.Model):
-    name = models.TextField(max_length=100, verbose_name='Nombre del Material')
+    name = models.CharField(max_length=50, verbose_name='Nombre del Material')
+    size = models.CharField(verbose_name='Medida', max_length=20, default='carta')
     quantity_ordered = models.IntegerField(verbose_name='Cantidad')
     price = models.FloatField(verbose_name='Precio')
+    vat = models.CharField(max_length=4, choices=[('1.16', '16%'),
+                                                  ('1.08', '8%'),
+                                                  ('1', 'N/A')],
+                           default=1.08)
 
     def __str__(self):
         return self.name
