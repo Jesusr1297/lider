@@ -30,4 +30,5 @@ class MaterialsCreateView(SuccessMessageMixin, CreateView):
 
 
 class MaterialsDetailView(DetailView):
-    pass
+    model = Materials
+    template_name = 'budgets/material_detail.html'
