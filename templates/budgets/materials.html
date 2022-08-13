@@ -27,8 +27,8 @@
             <div class="col my-auto text-center">{{ material.price|floatformat:"2g" }}</div>
             <div class="col my-auto">???</div>
             <div class="col-1"> <a href="{% url 'material-detail' material.id %}" class="btn">Detalles</a></div>
-            <div class="col-1"> <a href="#" class="btn">Editar</a></div>
-            <div class="col-1"> <a href="#" class="btn">Eliminar</a></div>
+            <div class="col-1"> <a href="{% url 'material-update' material.id %}" class="btn">Editar</a></div>
+            <div class="col-1"> <a href="{% url 'material-delete' material.id %}" class="btn">Eliminar</a></div>
         </div>
     {% endfor %}
 {% endblock content %}

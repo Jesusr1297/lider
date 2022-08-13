@@ -1,9 +1,9 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
-
+from django.contrib import messages
 from orders.models import Materials
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 
 
 # class BudgetView(ListView):
@@ -32,3 +32,23 @@ class MaterialsCreateView(SuccessMessageMixin, CreateView):
 class MaterialsDetailView(DetailView):
     model = Materials
     template_name = 'budgets/material_detail.html'
+
+
+class MaterialsDeleteView(DeleteView):
+    model = Materials
+    template_name = 'budgets/material_confirm_delete.html'
+
+    def get_success_url(self):
+        messages.error(self.request, f'Se ha eliminado el material: {self.object.name}')
+        return reverse_lazy('materials')
+
+
+class MaterialUpdateView(UpdateView):
+    model = Materials
+    fields = '__all__'
+    template_name = 'budgets/material_update.html'
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Se ha actualizado el material')
+        return reverse_lazy('materials')
+

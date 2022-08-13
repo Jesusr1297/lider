@@ -9,7 +9,6 @@ from django.db.models import Q
 from .forms import UserRegisterForm
 
 
-
 class OrderView(ListView):
     model = Order
     template_name = 'orders/order.html'
@@ -50,6 +49,7 @@ class OrderDeleteView(LoginRequiredMixin, DeleteView):
     pero al nosotros querer agregar un mensaje, sobre escribimos el metodo
     y agregamos el mensaje en get_success_url
     """
+
     # success_url = reverse_lazy('home')
 
     def get_success_url(self):
