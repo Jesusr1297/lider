@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -34,7 +35,7 @@ class MaterialsDetailView(DetailView):
     template_name = 'budgets/material_detail.html'
 
 
-class MaterialsDeleteView(DeleteView):
+class MaterialsDeleteView(LoginRequiredMixin, DeleteView):
     model = Materials
     template_name = 'budgets/material_confirm_delete.html'
 
