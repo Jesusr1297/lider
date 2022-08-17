@@ -66,11 +66,13 @@ def search_view(request):
         lider = Lider.objects.filter(Q(lider_id__icontains=q) |
                                      Q(doc_description__icontains=q) |
                                      Q(doc_inks__icontains=q))
+        material = Materials.objects.filter(Q(name__icontains=q))
 
         context = {
             'orders': orders.order_by('-id'),
             'customers': customers,
-            'lider': lider
+            'lider': lider,
+            'materials': material,
         }
     else:
         context = {}

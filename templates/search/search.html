@@ -37,5 +37,18 @@
             {% endfor %}
         {% endif %}
 
+        {% if materials %}
+            <h1>Materiales</h1>
+            {% for material in materials %}
+                <div class="row mb-4">
+                    <a href="{% url 'material-detail' material.id %}" class="col mx-4 link-dark">{{ material.name }}</a>
+                    <div class="col">{{ material.size }}</div>
+                    <div class="col">${{ material.price|floatformat:"2g"}}</div>
+                    <div class="col">{{ material.quantity_ordered|floatformat:"g"}}</div>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+
     </div>
 {% endblock %}
