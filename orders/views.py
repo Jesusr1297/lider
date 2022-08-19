@@ -58,7 +58,7 @@ class OrderDeleteView(LoginRequiredMixin, DeleteView):
 
 
 def search_view(request):
-    if request.method == 'GET' and request.GET.get('q') is not '':
+    if request.method == 'GET' and request.GET.get('q') != '':
         q = request.GET.get('q') if request.GET.get('q') is not None else ''
         orders = Order.objects.filter(Q(customer__name_company__icontains=q) |
                                       Q(lider_id__lider_id__icontains=q))

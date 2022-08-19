@@ -1,71 +1,75 @@
 {% load static %}
 <html lang="EN">
-    <title>
-        Lider
-    </title>
+<title>
+    Lider
+</title>
 
-    <body>
-        <nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">Lider</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'home' %}">Ordenes</a>
-            </li>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">Lider</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Ordenes</a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'customers' %}">Clientes</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'customers' %}">Clientes</a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'lider' %}">Trabajos</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'lider' %}">Trabajos</a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'budgets' %}">Cotizaciones</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav justify-content-end mb-2 mb-lg-0 mx-4">
-            <li class="nav-item dropdown justify-content-end">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {% if user.is_authenticated %}
-                        {{ user }}
-                    {% else %}
-                        Usuarios
-                    {% endif %}
-                </a>
-                <ul class="dropdown-menu">
-                    {% if user.is_authenticated %}
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesion</a></li>
-                    {% else %}
-                        <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesion</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'register' %}">Registrarse</a></li>
-                    {% endif %}
-                </ul>
-            </li>
-        </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'budgets' %}">Cotizaciones</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav justify-content-end mb-2 mb-lg-0 mx-4">
+                <li class="nav-item dropdown justify-content-end">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        {% if user.is_authenticated %}
+                            {{ user }}
+                        {% else %}
+                            Usuarios
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% if user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesion</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesion</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'register' %}">Registrarse</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
 
-        <form class="d-flex my-2" role="search" method="GET" action="{% url 'search' %}">
-          {% csrf_token %}
-          <input class="form-control me-2" type="text" placeholder="Buscar" aria-label="Search" name="q">
-          <button class="btn btn-outline-success" type="submit">Buscar</button>
-      </form>
+            <form class="d-flex my-2" role="search" method="GET" action="{% url 'search' %}">
+                {% csrf_token %}
+                <input class="form-control me-2" type="text" placeholder="Buscar" aria-label="Search" name="q">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+        </div>
     </div>
-  </div>
 </nav>
-    
-    
-    
-    {% block content %}
-    
-    {% endblock %}
-    </body>
-    <footer>
+
+
+
+{% block content %}
+
+{% endblock %}
+</body>
+<footer>
     {% if is_paginated %}
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center my-4">
@@ -86,7 +90,8 @@
                 {% endif %}
 
 
-                <li class="page-item"><a class="page-link font-weight-bold link-dark" href="#">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+                <li class="page-item"><a class="page-link font-weight-bold link-dark" href="#">{{ page_obj.number }}
+                    de {{ page_obj.paginator.num_pages }}</a></li>
 
 
                 {% if page_obj.has_next %}
@@ -107,15 +112,6 @@
             </ul>
         </nav>
     {% endif %}
-
-
-
-
-
-
-    </footer>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'crm/main.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</footer>
+{% include 'orders/scripts.html' %}
 </html>
