@@ -1,7 +1,7 @@
 {% extends 'orders/base.html' %}
 
 {% block content %}
-   <div class="row mb-4">
+    <div class="row mb-4">
         <div class="col ms-4">
             <h1>Materiales</h1>
         </div>
@@ -11,13 +11,7 @@
         </div>
     </div>
 
-
-    {% if messages %}
-        {% for message in messages %}
-            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-
+    {% include 'orders/messages.html' %}
 
     {% for material in object_list %}
         <div class="row mb-2">
@@ -26,9 +20,9 @@
             <div class="col my-auto">{{ material.quantity_ordered|floatformat:"g" }}</div>
             <div class="col my-auto text-center">{{ material.price|floatformat:"2g" }}</div>
             <div class="col my-auto">???</div>
-            <div class="col-1"> <a href="{% url 'material-detail' material.id %}" class="btn">Detalles</a></div>
-            <div class="col-1"> <a href="{% url 'material-update' material.id %}" class="btn">Editar</a></div>
-            <div class="col-1"> <a href="{% url 'material-delete' material.id %}" class="btn">Eliminar</a></div>
+            <div class="col-1"><a href="{% url 'material-detail' material.id %}" class="btn">Detalles</a></div>
+            <div class="col-1"><a href="{% url 'material-update' material.id %}" class="btn">Editar</a></div>
+            <div class="col-1"><a href="{% url 'material-delete' material.id %}" class="btn">Eliminar</a></div>
         </div>
     {% endfor %}
 {% endblock content %}

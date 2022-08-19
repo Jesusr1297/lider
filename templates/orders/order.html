@@ -2,27 +2,24 @@
 {% block content %}
     <div class="row mb-4">
         <div class="col ms-4">
-        <h1>Ordenes</h1>
+            <h1>Ordenes</h1>
         </div>
         <div class="col-auto">
-                <h4><a class="btn" href="{% url 'order-create' %}">Nueva Orden</a></h4>
+            <h4><a class="btn" href="{% url 'order-create' %}">Nueva Orden</a></h4>
         </div>
     </div>
 
-{% if messages %}
-    {% for message in messages %}
-        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-    {% endfor %}
-{% endif %}
+    {% include 'orders/messages.html' %}
 
     {% for order in object_list %}
         <div class="row mb-2">
             <a class="col-1 mx-4 my-auto link-dark" href="{% url 'order-detail' order.id %}">{{ order.lider_id }}</a>
-            <a class="col mx-auto my-auto link-dark" href="{% url 'customer-detail' order.customer.id %}">{{ order.customer }}</a>
+            <a class="col mx-auto my-auto link-dark"
+               href="{% url 'customer-detail' order.customer.id %}">{{ order.customer }}</a>
             <div class="col my-auto">{{ order.date_ordered }}</div>
-            <div class="col-1"> <a href="{% url 'order-detail' order.id %}" class="btn">Detalles</a></div>
-            <div class="col-1"> <a href="{% url 'order-update' order.id %}" class="btn">Editar</a></div>
-            <div class="col-1"> <a href="{% url 'order-delete' order.id %}" class="btn">Eliminar</a></div>
+            <div class="col-1"><a href="{% url 'order-detail' order.id %}" class="btn">Detalles</a></div>
+            <div class="col-1"><a href="{% url 'order-update' order.id %}" class="btn">Editar</a></div>
+            <div class="col-1"><a href="{% url 'order-delete' order.id %}" class="btn">Eliminar</a></div>
         </div>
     {% endfor %}
 

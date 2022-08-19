@@ -3,29 +3,24 @@
 {% block content %}
     <div class="row mb-4">
         <div class="col ms-4">
-        <h1>Clientes</h1>
+            <h1>Clientes</h1>
         </div>
         <div class="col-auto">
-                <h4><a href="{% url 'customers-create' %}" class="btn">Nuevo Cliente</a></h4>
+            <h4><a href="{% url 'customers-create' %}" class="btn">Nuevo Cliente</a></h4>
         </div>
     </div>
 
-
-    {% if messages %}
-        {% for message in messages %}
-            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-
+    {% include 'orders/messages.html' %}
 
     {% for customer in object_list %}
         <div class="row mb-2">
-            <a class="col-1 mx-4 my-auto link-dark" href="{% url 'customer-detail' customer.id %}">{{ customer.name_company }}</a>
+            <a class="col-1 mx-4 my-auto link-dark"
+               href="{% url 'customer-detail' customer.id %}">{{ customer.name_company }}</a>
             <div class="col mx-auto my-auto">{{ customer.email }}</div>
             <div class="col my-auto">{{ customer.phone_number }}</div>
-            <div class="col-1"> <a href="{% url 'customer-detail' customer.id %}" class="btn">Detalles</a></div>
-            <div class="col-1"> <a href="{% url 'customer-update' customer.id %}" class="btn">Editar</a></div>
-            <div class="col-1"> <a href="{% url 'customer-delete' customer.id %}" class="btn">Eliminar</a></div>
+            <div class="col-1"><a href="{% url 'customer-detail' customer.id %}" class="btn">Detalles</a></div>
+            <div class="col-1"><a href="{% url 'customer-update' customer.id %}" class="btn">Editar</a></div>
+            <div class="col-1"><a href="{% url 'customer-delete' customer.id %}" class="btn">Eliminar</a></div>
         </div>
     {% endfor %}
 {% endblock content %}

@@ -1,0 +1,9 @@
+{% extends 'orders/base.html' %}
+
+{% block content %}
+    <form action="" method="post" class="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrarse</button>
+    </form>
+{% endblock %}

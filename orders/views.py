@@ -1,33 +1,42 @@
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from .models import *
+from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib import messages
-from django.db.models import Q
-from .forms import UserRegisterForm
+from django.views import generic
+from .models import *
 
 
-class OrderView(ListView):
+class SignUpView(SuccessMessageMixin, generic.CreateView):
+    template_name = 'registration/signup.html'
+    form_class = UserCreationForm
+    success_message = 'Usuario creado con exito'
+
+    def get_success_url(self):
+        return reverse_lazy('login')
+
+
+class OrderView(generic.ListView):
     model = Order
     template_name = 'orders/order.html'
     ordering = ['-id']
     paginate_by = 2
 
 
-class OrderCreateView(SuccessMessageMixin, CreateView):
+class OrderCreateView(SuccessMessageMixin, generic.CreateView):
     model = Order
     fields = ['lider_id', 'customer', 'quantity_ordered']
     success_url = reverse_lazy('home')
     success_message = 'Se ha creado una nueva orden'
 
 
-class OrderDetailView(DetailView):
+class OrderDetailView(generic.DetailView):
     model = Order
 
 
-class OrderUpdateView(UpdateView):
+class OrderUpdateView(generic.UpdateView):
     model = Order
     fields = '__all__'
 
@@ -42,7 +51,7 @@ class OrderUpdateView(UpdateView):
         return reverse_lazy('home')
 
 
-class OrderDeleteView(LoginRequiredMixin, DeleteView):
+class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Order
     """
     Se puede usar directamente success_url para regresar al menu principal, 
@@ -78,16 +87,3 @@ def search_view(request):
         context = {}
 
     return render(request, 'search/search.html', context)
-
-
-def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'La cuenta {username} se ha creado exitosamente. Puedes iniciar sesion')
-            return redirect('login')
-    else:
-        form = UserRegisterForm()
-    return render(request, 'registration/register.html', {'form': form})

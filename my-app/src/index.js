@@ -36,5 +36,9 @@ class Square extends React.Component {
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<ShoppingList/>);
-// root.render(<Board/>)
+root.render(
+    <>
+        <ShoppingList/>
+        <Board/>
+    </>
+);
