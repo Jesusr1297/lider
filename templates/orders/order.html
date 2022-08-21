@@ -13,7 +13,7 @@
 
     {% for order in object_list %}
         <div class="row mb-2">
-            <a class="col-1 mx-4 my-auto link-dark" href="{% url 'order-detail' order.id %}">{{ order.lider_id }}</a>
+            <a class="col-1 mx-4 my-auto link-dark container-sm" href="{% url 'order-detail' order.id %}">{{ order.lider_id }}</a>
             <a class="col mx-auto my-auto link-dark"
                href="{% url 'customer-detail' order.customer.id %}">{{ order.customer }}</a>
             <div class="col my-auto">{{ order.date_ordered }}</div>
@@ -22,8 +22,4 @@
             <div class="col-1"><a href="{% url 'order-delete' order.id %}" class="btn">Eliminar</a></div>
         </div>
     {% endfor %}
-
-
-
-
 {% endblock %}

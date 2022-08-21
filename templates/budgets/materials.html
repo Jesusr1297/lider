@@ -15,7 +15,7 @@
 
     {% for material in object_list %}
         <div class="row mb-2">
-            <a class="col mx-4 my-auto link-dark" href="#">{{ material.name }}</a>
+            <a class="col mx-4 my-auto link-dark" href="{% url 'material-detail' material.id %}">{{ material.name }}</a>
             <div class="col mx-auto my-auto">{{ material.size }}</div>
             <div class="col my-auto">{{ material.quantity_ordered|floatformat:"g" }}</div>
             <div class="col my-auto text-center">{{ material.price|floatformat:"2g" }}</div>
