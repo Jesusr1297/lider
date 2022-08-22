@@ -86,4 +86,4 @@ def search_view(request):
     else:
         context = {}
 
-    return render(request, 'search/search.html', context)
+    return render(request, 'search.html', context)

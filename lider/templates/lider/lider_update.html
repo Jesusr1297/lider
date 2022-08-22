@@ -1,4 +1,4 @@
-{% extends 'orders/base.html' %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -9,6 +9,6 @@
                 {{ form|crispy }}
                 <input type="submit" value="Save" class="btn">
         </form>
-        </div>
-    </div>
+  </div>
+ </div>
 {% endblock content %}

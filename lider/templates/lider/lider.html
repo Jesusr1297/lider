@@ -1,4 +1,4 @@
-{% extends 'orders/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <div class="row mb-4">
@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    {% include 'orders/messages.html' %}
+    {% include 'messages.html' %}
 
     {% for trabajo in object_list %}
         <div class="row mb-2 mx-auto">

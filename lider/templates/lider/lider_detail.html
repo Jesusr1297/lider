@@ -1,16 +1,16 @@
-{% extends 'orders/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <div class="row my-4">
         <div class="col text-center">
-            <h1>Orden {{ object.id|stringformat:"03d"}}</h1>
+            <h1>Lider {{ object.lider_id}}</h1>
         </div>
     </div>
 
     <div class="container text-center">
-        <h4 class="fw-light">{{ object.lider_id }}</h4>
         <h4 class="fw-light" style="margin-left: 1rem">{{ object.customer }}</h4>
-        <h4 class="fw-light">{{ object.quantity_ordered }}</h4>
+        <h4 class="fw-light">{{ object.doc_inks }}</h4>
+        <h4 class="fw-light">{{ object.doc_description }}</h4>
     </div>
 
 {% endblock %}
