@@ -1,7 +1,0 @@
-/.idea
-/.DS_Store
-__pycache__
-*.swp
-*.sqlite
-.gitignore
-/my-app/.idea/
