@@ -5,3 +5,6 @@ __pycache__
 *.sqlite
 .gitignore
 /my-app/.idea/
+
+/node_modules/.DS_Store
+

@@ -19,7 +19,7 @@
             <div class="col mx-auto my-auto">{{ material.size }}</div>
             <div class="col my-auto">{{ material.quantity_ordered|floatformat:"g" }}</div>
             <div class="col my-auto text-center">{{ material.price|floatformat:"2g" }}</div>
-            <div class="col my-auto">???</div>
+            <div class="col my-auto">{{ material.get_vat_price|floatformat:"2g" }}</div>
             <div class="col-1"><a href="{% url 'material-detail' material.id %}" class="btn">Detalles</a></div>
             <div class="col-1"><a href="{% url 'material-update' material.id %}" class="btn">Editar</a></div>
             <div class="col-1"><a href="{% url 'material-delete' material.id %}" class="btn">Eliminar</a></div>

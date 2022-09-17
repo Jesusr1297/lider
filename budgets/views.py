@@ -24,7 +24,7 @@ class MaterialsView(ListView):
 
 class MaterialsCreateView(SuccessMessageMixin, CreateView):
     model = Materials
-    template_name = ''
+    template_name = 'budgets/material_form.html'
     success_message = 'Se ha agregado un nuevo material'
     fields = '__all__'
     success_url = reverse_lazy('materials')

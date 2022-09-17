@@ -55,5 +55,9 @@ class Materials(models.Model):
                                                   ('1', 'N/A')],
                            default=1.08)
 
+    @property
+    def get_vat_price(self):
+        return float(self.vat) * self.price
+
     def __str__(self):
         return self.name
