@@ -40,6 +40,9 @@ class Order(models.Model):
     date_ordered = models.DateField('Fecha ordenada', auto_now=True)
     expected_delivery_date = models.DateField('Fecha esperada de Entrega', auto_now=True)
     quantity_ordered = models.PositiveIntegerField(verbose_name='Cantidad Solicitada', default=0)
+    complete = models.BooleanField(verbose_name='Terminado', default=False)
+    delivered = models.BooleanField(verbose_name='entregado', default=False)
+    paid = models.BooleanField(verbose_name='pagado', default=False)
 
     def __str__(self):
         return f'{self.id:03d} {self.lider_id} {str(self.customer).title()}'
@@ -61,3 +64,9 @@ class Materials(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    lider = models.ForeignKey(Lider, on_delete=models.DO_NOTHING)
+    finished = models.BooleanField()
