@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from .models import *
+from . import models
 
 
 class SignUpView(SuccessMessageMixin, generic.CreateView):
@@ -19,25 +19,25 @@ class SignUpView(SuccessMessageMixin, generic.CreateView):
 
 
 class OrderView(generic.ListView):
-    model = Order
+    model = models.OrderItem
     template_name = 'orders/order.html'
     ordering = ['-id']
     paginate_by = 2
 
 
 class OrderCreateView(SuccessMessageMixin, generic.CreateView):
-    model = Order
+    model = models.Order
     fields = ['lider_id', 'customer', 'quantity_ordered']
     success_url = reverse_lazy('home')
     success_message = 'Se ha creado una nueva orden'
 
 
 class OrderDetailView(generic.DetailView):
-    model = Order
+    model = models.Order
 
 
 class OrderUpdateView(generic.UpdateView):
-    model = Order
+    model = models.Order
     fields = '__all__'
 
     """
@@ -52,7 +52,7 @@ class OrderUpdateView(generic.UpdateView):
 
 
 class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Order
+    model = models.Order
     """
     Se puede usar directamente success_url para regresar al menu principal, 
     pero al nosotros querer agregar un mensaje, sobre escribimos el metodo
@@ -69,13 +69,13 @@ class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
 def search_view(request):
     if request.method == 'GET' and request.GET.get('q') != '':
         q = request.GET.get('q') if request.GET.get('q') is not None else ''
-        orders = Order.objects.filter(Q(customer__name_company__icontains=q) |
+        orders = models.Order.objects.filter(Q(customer__name_company__icontains=q) |
                                       Q(lider_id__lider_id__icontains=q))
-        customers = Customer.objects.filter(Q(name_company__icontains=q))
-        lider = Lider.objects.filter(Q(lider_id__icontains=q) |
+        customers = models.Customer.objects.filter(Q(name_company__icontains=q))
+        lider = models.Lider.objects.filter(Q(lider_id__icontains=q) |
                                      Q(doc_description__icontains=q) |
                                      Q(doc_inks__icontains=q))
-        material = Materials.objects.filter(Q(name__icontains=q))
+        material = models.Materials.objects.filter(Q(name__icontains=q))
 
         context = {
             'orders': orders.order_by('-id'),

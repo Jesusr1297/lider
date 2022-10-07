@@ -69,4 +69,6 @@ class Materials(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     lider = models.ForeignKey(Lider, on_delete=models.DO_NOTHING)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     finished = models.BooleanField()
+
