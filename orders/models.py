@@ -72,3 +72,13 @@ class OrderItem(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     finished = models.BooleanField()
 
+
+class Quotation(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+
+
+class QuotationItem(models.Model):
+    quotation = models.ForeignKey(Quotation, on_delete=models.SET_NULL, null=True)
+    quantity = models.IntegerField()
+    material = models.ForeignKey(Materials, on_delete=models.SET_NULL, null=True)
+
