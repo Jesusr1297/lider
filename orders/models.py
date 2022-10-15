@@ -76,9 +76,14 @@ class OrderItem(models.Model):
 class Quotation(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return self.id
+
 
 class QuotationItem(models.Model):
     quotation = models.ForeignKey(Quotation, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField()
     material = models.ForeignKey(Materials, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return self.id
