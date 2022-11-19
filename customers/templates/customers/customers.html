@@ -1,26 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="row mb-4">
-        <div class="col ms-4">
-            <h1>Clientes</h1>
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-5">
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Clientes</h1>
+            </div>
+            <div class="flex flex-wrap -m-2">
+                {% for customer in customer_list %}
+                    <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                        <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
+                            <img alt="team"
+                                 class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                                 src="https://dummyimage.com/80x80">
+                            <div class="flex-grow">
+                                <h2 class="text-gray-900 title-font font-medium">{{ customer.name_company }}</h2>
+                                <p>some info</p>
+                                <a href="{% url 'customer-detail' customer.pk %}"
+                                   class="text-indigo-600 hover:text-blue-500">Detalle</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-        <div class="col-auto">
-            <h4><a href="{% url 'customers-create' %}" class="btn">Nuevo Cliente</a></h4>
-        </div>
-    </div>
-
-    {% include 'messages.html' %}
-
-    {% for customer in object_list %}
-        <div class="row mb-2">
-            <a class="col-1 mx-4 my-auto link-dark"
-               href="{% url 'customer-detail' customer.id %}">{{ customer.name_company }}</a>
-            <div class="col mx-auto my-auto">{{ customer.email }}</div>
-            <div class="col my-auto">{{ customer.phone_number }}</div>
-            <div class="col-1"><a href="{% url 'customer-detail' customer.id %}" class="btn">Detalles</a></div>
-            <div class="col-1"><a href="{% url 'customer-update' customer.id %}" class="btn">Editar</a></div>
-            <div class="col-1"><a href="{% url 'customer-delete' customer.id %}" class="btn">Eliminar</a></div>
-        </div>
-    {% endfor %}
+    </section>
 {% endblock content %}

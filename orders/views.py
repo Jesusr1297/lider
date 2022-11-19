@@ -19,9 +19,9 @@ class SignUpView(SuccessMessageMixin, generic.CreateView):
 
 
 class OrderView(generic.ListView):
-    model = models.OrderItem
+    model = models.Order
     template_name = 'orders/order.html'
-    ordering = ['-id']
+    ordering = ['id']
     # paginate_by = 2
 
 
@@ -33,14 +33,14 @@ class OrderCreateView(SuccessMessageMixin, generic.CreateView):
 
 
 class OrderDetailView(generic.DetailView):
-    model = models.OrderItem
+    model = models.Order
     template_name = 'orders/order_detail.html'
-    # extra_context = models.Order.objects.get()
 
 
 class OrderUpdateView(generic.UpdateView):
     model = models.Order
     fields = '__all__'
+    template_name = 'orders/order_update.html'
 
     """
     Se utiliza la funcion get_success_url en lugar del metodo success_url para poder agregar
@@ -50,7 +50,7 @@ class OrderUpdateView(generic.UpdateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Se ha actualizado la orden')
-        return reverse_lazy('home')
+        return reverse_lazy('order-detail', kwargs={'pk': self.get_object().id})
 
 
 class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -72,11 +72,11 @@ def search_view(request):
     if request.method == 'GET' and request.GET.get('q') != '':
         q = request.GET.get('q') if request.GET.get('q') is not None else ''
         orders = models.Order.objects.filter(Q(customer__name_company__icontains=q) |
-                                      Q(lider_id__lider_id__icontains=q))
+                                             Q(lider_id__lider_id__icontains=q))
         customers = models.Customer.objects.filter(Q(name_company__icontains=q))
         lider = models.Lider.objects.filter(Q(lider_id__icontains=q) |
-                                     Q(doc_description__icontains=q) |
-                                     Q(doc_inks__icontains=q))
+                                            Q(doc_description__icontains=q) |
+                                            Q(doc_inks__icontains=q))
         material = models.Materials.objects.filter(Q(name__icontains=q))
 
         context = {

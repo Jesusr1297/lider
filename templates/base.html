@@ -1,16 +1,19 @@
-{% load static %}
+<!DOCTYPE HTML>
 <html lang="EN">
 <title>
     Lider
 </title>
+<head>
+    {% include 'scripts.html' %}
+</head>
 
 <body>
 {% include "navbar.html" %}
-    {% block content %}
-    {% endblock content %}
+{% include 'orders/../messages.html' %}
+{% block content %}
+{% endblock content %}
 </body>
 <footer>
     {% include 'paginator.html' %}
 </footer>
-{% include 'scripts.html' %}
 </html>

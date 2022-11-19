@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
+    'crispy_forms', 'crispy_tailwind',
     'orders', 'customers', 'lider', 'budgets'
 ]
 
@@ -121,16 +121,16 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MESSAGE_TAGS = {
-    message_constants.DEBUG: 'alert alert-secondary',
-    message_constants.INFO: 'alert alert-primary',
-    message_constants.SUCCESS: 'alert alert-success',
-    message_constants.WARNING: 'alert alert-warning',
-    message_constants.ERROR: 'alert alert-danger',
+    message_constants.DEBUG: 'bg-neutral-50 text-neutral-500',
+    message_constants.INFO: 'bg-blue-50 text-blue-500',
+    message_constants.SUCCESS: 'bg-green-50 text-green-500',
+    message_constants.WARNING: 'bg-yellow-50 text-yellow-500',
+    message_constants.ERROR: 'bg-red-50 text-red-500',
 
 }
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
+CRISPY_TEMPLATE_PACK = 'tailwind'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'

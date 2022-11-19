@@ -1,5 +1,7 @@
 {% if messages %}
     {% for message in messages %}
-        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        <div class="container mx-auto {{ message.tags }} box-content h-6 w-128 p-4 justify-center text-center">
+            {{ message }}
+        </div>
     {% endfor %}
 {% endif %}

@@ -1,54 +1,67 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="mx-4 my-4">
-        {% if orders %}
-            <h1>Ordenes</h1>
-            {% for order in orders %}
-                <div class="row my-4">
-                    <a href="{% url 'order-detail' order.id %}" class="col mx-4 link-dark">{{ order.id | stringformat:'03d'}}</a>
-                    <a href="{% url 'lider-detail' order.lider_id %}" class="col link-dark">{{ order.lider_id }}</a>
-                    <a href="{% url 'customer-detail' order.customer.id %}" class="col link-dark">{{ order.customer }}</a>
-                    <div class="col">{{ order.date_ordered }}</div>
-                </div>
-            {% endfor %}
-        {% endif %}
+    <section class="text-gray-600 body-font overflow-hidden">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="-my-8 divide-y-2 divide-gray-100">
+                {% if orders %}
+                    <div class="py-8 flex flex-nowrap">
+                        <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+                            <span class="font-semibold title-font text-gray-700">ORDENES</span>
+                        </div>
+                        <div class="flex flex-wrap">
+                            {% for order in orders %}
+                                <div class="flex-col text-center w-36 h-18 bg-gray-100 mx-1 my-1 rounded-lg flex items-center justify-center content-around p-1">
+                                    <a class="text-lg font-medium text-gray-900 title-font text-center">
+                                        {{ order.id|stringformat:'04d' }}
+                                    </a>
+                                    <a href="#">{{ order.customer }}</a>
+                                    <a class="text-indigo-500 inline-flex items-center">Learn More</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
 
-        {% if lider %}
-            <h1>Trabajos</h1>
-            {% for l in lider %}
-                <div class="row my-4">
-                    <a href='{% url 'lider-detail' l.lider_id %}' class="col mx-4 link-dark">{{ l.lider_id }}</a>
-                    <a href="{% url 'customer-detail' l.customer.id %}" class="col link-dark">{{ l.customer|title }}</a>
-                    <div class="col">{{ l.doc_description|title}}</div>
-                    <div class="col">{{ l.doc_inks|title }}</div>
-                </div>
-            {% endfor %}
-        {% endif %}
+                {% if lider %}
+                    <div class="py-8 flex flex-nowrap">
+                        <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+                            <span class="font-semibold title-font text-gray-700">TRABAJOS</span>
+                        </div>
+                        <div class="flex flex-wrap">
+                            {% for l in lider %}
+                                <div class="text-center w-36 h-18 bg-gray-100 mx-1 my-1 rounded-lg flex flex-col items-center justify-center content-around p-1">
+                                    <a class="text-lg font-medium text-gray-900 title-font text-center">
+                                        {{ l.lider_id }}
+                                    </a>
+                                    <a href="#">{{ l.customer }}</a>
+                                    <a class="text-indigo-500 inline-flex items-center">Learn More</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
 
-        {% if customers %}
-            <h1>Clientes</h1>
-            {% for customer in customers %}
-                <div class="row mb-4">
-                    <a href="{% url 'customer-detail' customer.id %}" class="col mx-4 link-dark">{{ customer.name_company }}</a>
-                    <div class="col">{{ customer.email }}</div>
-                    <div class="col">{{ customer.phone_number}}</div>
-                </div>
-            {% endfor %}
-        {% endif %}
+                {% if customers %}
+                    <div class="py-8 flex flex-nowrap">
+                        <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+                            <span class="font-semibold title-font text-gray-700">CLIENTES</span>
+                        </div>
+                        <div class="flex flex-wrap">
+                            {% for customer in customers %}
+                                <div class="text-center w-36 h-18 bg-gray-100 mx-1 my-1 rounded-lg flex flex-col items-center justify-center content-around p-1">
+                                    <a class="text-lg font-medium text-gray-900 title-font text-center flex items-center justify-center content-around">
+                                        {{ customer.name_company }}
+                                    </a>
+                                    <a class='flex flex-nowrap justify-center' href="#">{{ customer.phone_number }}</a>
+                                    <a class="text-indigo-500 inline-flex items-center">Learn More</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
 
-        {% if materials %}
-            <h1>Materiales</h1>
-            {% for material in materials %}
-                <div class="row mb-4">
-                    <a href="{% url 'material-detail' material.id %}" class="col mx-4 link-dark">{{ material.name }}</a>
-                    <div class="col">{{ material.size }}</div>
-                    <div class="col">${{ material.price|floatformat:"2g"}}</div>
-                    <div class="col">{{ material.quantity_ordered|floatformat:"g"}}</div>
-                </div>
-            {% endfor %}
-
-        {% endif %}
-
-    </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

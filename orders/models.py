@@ -45,7 +45,7 @@ class Order(models.Model):
     paid = models.BooleanField(verbose_name='pagado', default=False)
 
     def __str__(self):
-        return f'{self.id:03d} {self.lider_id} {str(self.customer).title()}'
+        return f'{self.id:03d}'
 
 
 class Materials(models.Model):

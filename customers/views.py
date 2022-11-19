@@ -11,7 +11,7 @@ class CustomersView(ListView):
     model = Customer
     template_name = 'customers/customers.html'
     ordering = ['-id']
-    paginate_by = 2
+    # paginate_by = 2
 
 
 class CustomerDetailView(DetailView):
@@ -34,7 +34,7 @@ class CustomerUpdateView(UpdateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Se ha actualizado cliente correctamente')
-        return reverse_lazy('customers')
+        return reverse_lazy('customer-detail', kwargs={'pk': self.get_object().id})
 
 
 class CustomerDeleteView(LoginRequiredMixin, DeleteView):

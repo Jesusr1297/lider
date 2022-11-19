@@ -2,13 +2,22 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <form method="post" class="form-group col-md-4 col-md-offset-5 align-center">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <input type="submit" value="Update" class="btn">
-        </form>
-  </div>
- </div>
-{% endblock content %}
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
+            <div class="mx-auto lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+                <h2 class="text-gray-900 text-lg font-medium title-font mb-2">Actualizar</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="flex flex-col items-center">
+                        <button type="submit"
+                                class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">
+                            Actualizar
+                        </button>
+                    </div>
+                </form>
+                <p class="text-xs text-gray-500 mt-3">Literally you probably haven't heard of them jean shorts.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
