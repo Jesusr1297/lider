@@ -1,42 +1,21 @@
 {% if is_paginated %}
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center my-4">
+    <section class="flex justify-center content-end">
+        <div class="w-2/3 flex justify-evenly items-center">
             {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link link-dark" href="?page=1">&laquoPrincipio</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link link-dark" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-                </li>
+                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page=1">&laquoPrincipio</a>
+                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
             {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="{{ page_obj.start_index }}">&laquoPrincipio</a>
-                </li>
-                <li class="page-item disabled">
-                    <a class="page-link">Anterior</a>
-                </li>
+                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page=1">&laquoPrincipio</a>
+                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded">Anterior</a>
             {% endif %}
-
-
-            <li class="page-item"><a class="page-link font-weight-bold link-dark" href="#">{{ page_obj.number }}
-                de {{ page_obj.paginator.num_pages }}</a></li>
-
-
+            {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
             {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link link-dark" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link link-dark" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
-                </li>
+                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
             {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link">Siguiente</a>
-                </li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
-                </li>
+                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded">Siguiente</a>
+                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
             {% endif %}
-        </ul>
-    </nav>
+        </div>
+    </section>
 {% endif %}

@@ -11,7 +11,7 @@ class CustomersView(ListView):
     model = Customer
     template_name = 'customers/customers.html'
     ordering = ['-id']
-    # paginate_by = 2
+    paginate_by = 5
 
 
 class CustomerDetailView(DetailView):

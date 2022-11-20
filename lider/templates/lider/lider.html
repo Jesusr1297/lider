@@ -9,9 +9,6 @@
             <h4><a class="btn" href="{% url 'lider-create' %}">Nuevo Trabajo</a></h4>
         </div>
     </div>
-
-    {% include 'messages.html' %}
-
     {% for trabajo in object_list %}
         <div class="row mb-2 mx-auto">
             <a class="col-1 mx-4 my-auto link-dark"

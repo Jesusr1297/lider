@@ -22,7 +22,7 @@ class OrderView(generic.ListView):
     model = models.Order
     template_name = 'orders/order.html'
     ordering = ['id']
-    # paginate_by = 2
+    paginate_by = 3
 
 
 class OrderCreateView(SuccessMessageMixin, generic.CreateView):

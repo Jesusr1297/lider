@@ -3,8 +3,10 @@
 {% block content %}
     <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
-            <div class="flex flex-col text-center w-full mb-5">
-                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Clientes</h1>
+            <div class="grid grid-cols-3 text-center w-full mb-5">
+                <p></p>
+                <h1 class="sm:text-4xl text-3xl font-medium title-font mb-4 text-gray-900">Clientes</h1>
+                <a class="grid content-center justify-start" href="{% url 'customers-create' %}">Nuevo Cliente</a>
             </div>
             <div class="flex flex-wrap -m-2">
                 {% for customer in customer_list %}
