@@ -20,7 +20,7 @@ class SignUpView(SuccessMessageMixin, generic.CreateView):
 
 class OrderView(generic.ListView):
     model = models.Order
-    template_name = 'orders/order.html'
+    template_name = 'orders/order_list.html'
     ordering = ['id']
     paginate_by = 3
 
@@ -66,6 +66,13 @@ class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_success_url(self):
         messages.error(self.request, f'Se ha eliminado la orden: {self.object.id:03d}')
         return reverse_lazy('home')
+
+
+class CartView(generic.TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        items = models.OrderItem.objects.filter(order_id=kwargs['pk'])
+        return render(request, template_name='orders/cart.html', context={'items': items})
 
 
 def search_view(request):

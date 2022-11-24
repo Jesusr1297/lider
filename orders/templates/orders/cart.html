@@ -3,22 +3,23 @@
     <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
             <div class="grid grid-cols-3 text-center w-full mb-5">
-                <p></p>
-                <h1 class=" sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Ordenes</h1>
+                <p class="grid content-center justify-end">{{ items.first.order.customer }}</p>
+                <h1 class=" sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">
+                    Orden: {{ items.first.id|stringformat:'04d' }}</h1>
                 <a class="grid content-center justify-start" href="{% url 'order-create' %}">Nueva Orden</a>
             </div>
             <div class="lg:w-2/3 w-full mx-auto overflow-auto">
-                <table class="table-auto w-full text-left whitespace-no-wrap">
+                <table class="table-auto w-full text-center whitespace-no-wrap">
                     <thead>
                     <tr>
                         <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
-                            Orden
+                            Lider
                         </th>
                         <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                            Cliente
+                            Cantidad
                         </th>
                         <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                            Fecha Ordenada
+                            Status
                         </th>
                         <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
 
@@ -27,12 +28,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for object in object_list %}
+                    {% for item in items %}
                         <tr>
-                            <td class="px-4 py-3">{{ object.id|stringformat:'04d' }}</td>
-                            <td class="px-4 py-3">{{ object.customer|lower }}</td>
-                            <td class="px-4 py-3">{{ object.order.date_ordered }}</td>
-                            <td><a class="px-4 py-3" href="{% url 'order-detail' object.id %}">Detalle</a></td>
+                            <td class="px-4 py-3">{{ item.lider_id }}</td>
+                            <td class="px-4 py-3">{{ item.quantity_ordered|floatformat:'g' }}</td>
+                            <td class="px-4 py-3">{{ item.status }}</td>
+                            <td><a class="px-4 py-3" href="#">Detalle</a></td>
                             <td class="w-10 text-center">
                                 <input name="plan" type="radio">
                             </td>
@@ -53,6 +54,7 @@
                     Button
                 </button>
             </div>
+
         </div>
     </section>
 {% endblock %}

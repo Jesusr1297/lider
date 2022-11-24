@@ -36,11 +36,9 @@ class Lider(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    lider_id = models.ForeignKey(Lider, on_delete=models.CASCADE)
     date_ordered = models.DateField('Fecha ordenada', auto_now=True)
     expected_delivery_date = models.DateField('Fecha esperada de Entrega', auto_now=True)
-    quantity_ordered = models.PositiveIntegerField(verbose_name='Cantidad Solicitada', default=0)
-    complete = models.BooleanField(verbose_name='Terminado', default=False)
+    completed = models.BooleanField(verbose_name='Terminado', default=False)
     delivered = models.BooleanField(verbose_name='entregado', default=False)
     paid = models.BooleanField(verbose_name='pagado', default=False)
 
@@ -69,8 +67,12 @@ class Materials(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     lider = models.ForeignKey(Lider, on_delete=models.DO_NOTHING)
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    quantity_ordered = models.IntegerField()
     finished = models.BooleanField()
+
+    @property
+    def status(self):
+        return 'Terminado' if self.finished else 'Pendiente'
 
 
 class Quotation(models.Model):
