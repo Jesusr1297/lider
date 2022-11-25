@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from orders.views import SignUpView, CartView
+from orders.views import SignUpView, CartView, LandingPageView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('orders.urls')),
+    path('', LandingPageView.as_view(), name='home'),
+    path('ordenes/', include('orders.urls')),
     path('clientes/', include('customers.urls')),
     path('trabajos/', include('lider.urls')),
     path('cotizaciones/', include('budgets.urls')),

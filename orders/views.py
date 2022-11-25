@@ -18,6 +18,10 @@ class SignUpView(SuccessMessageMixin, generic.CreateView):
         return reverse_lazy('login')
 
 
+class LandingPageView(generic.TemplateView):
+    template_name = 'landing.html'
+
+
 class OrderView(generic.ListView):
     model = models.Order
     template_name = 'orders/order_list.html'

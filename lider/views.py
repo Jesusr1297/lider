@@ -13,7 +13,6 @@ class LiderView(ListView):
     model = Lider
     template_name = 'lider/lider.html'
     ordering = ['-lider_id']
-    paginate_by = 2
 
 
 class LiderCreateView(SuccessMessageMixin, CreateView):
