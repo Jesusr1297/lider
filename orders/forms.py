@@ -3,6 +3,7 @@ from .models import Order, OrderItem
 
 
 class OrderModelForm(forms.ModelForm):
+    raw_id_fields = ("lider", )
     class Meta:
         model = Order
         fields = ['customer']

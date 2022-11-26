@@ -47,10 +47,11 @@ class Order(models.Model):
 
 
 class Materials(models.Model):
+    id = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=50, verbose_name='Nombre del Material')
-    size = models.CharField(verbose_name='Medida', max_length=20, default='carta')
     quantity_ordered = models.IntegerField(verbose_name='Cantidad')
-    price = models.FloatField(verbose_name='Precio')
+    unit_code = models.CharField(max_length=5)
+    unit_price = models.FloatField(verbose_name='Precio')
     vat = models.CharField(max_length=4, choices=[('1.16', '16%'),
                                                   ('1.08', '8%'),
                                                   ('1', 'N/A')],
@@ -73,6 +74,9 @@ class OrderItem(models.Model):
     @property
     def status(self):
         return 'Terminado' if self.finished else 'Pendiente'
+
+    def __str__(self):
+        return f'{self.order}-{self.lider}'
 
 
 class Quotation(models.Model):
