@@ -1,32 +1,16 @@
 from bs4 import BeautifulSoup
-import glob
 import json
 
 
-def xml_products(path=None):
-    if path is None:
-        return json.dumps({})
-
-    print(path + '/*.xml')
-    xml_list = glob.glob(path + '/*.xml')
-    print(xml_list)
-    products = []
-
-    for xml in xml_list:
-        with open(xml) as f:
-            data = f.read()
-
-        soup = BeautifulSoup(data, xml)
-        concepts = soup.find_all('cfdi:Concepto')
-
-        for tag in concepts:
-            products.append({
-                'id': tag['NoIdentificacion'],
-                'name': tag['Descripcion'],
-                'quantity_ordered': tag['Cantidad'],
-                'unit_code': tag['Unidad'],
-                'unit_price': tag['ValorUnitario'],
-                'vat': tag.find('cfdi:Traslado')['TasaOCuota']
-            })
-
-    return json.dumps(products)
+def xml_to_model(xml, model):
+    soup = BeautifulSoup(xml, features='xml')
+    concepts = soup.find_all('cfdi:Concepto')
+    for tag in concepts:
+        obj, created = model.objects.get_or_create(id=tag['NoIdentificacion'])
+        obj.name = tag['Descripcion']
+        obj.quantity_ordered = float(tag['Cantidad'])
+        obj.unit_code = tag['Unidad']
+        obj.unit_price = float(tag['ValorUnitario'])
+        obj.vat = float(tag.find('cfdi:Traslado')['TasaOCuota']) + 1
+        obj.save()
+    return

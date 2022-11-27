@@ -36,7 +36,7 @@ class OrderCreateView(SuccessMessageMixin, generic.CreateView):
     success_message = 'Se ha creado una nueva orden'
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('cart', kwargs={'pk': self.object.pk})
+        return reverse_lazy('orderItem-detail', kwargs={'pk': self.object.pk})
 
 
 class OrderDetailView(generic.DetailView):
@@ -89,6 +89,14 @@ class OrderItemAddView(generic.CreateView):
     form_class = OrderItemModelForm
     template_name = 'orders/order_form.html'
 
+    # def get_context_data(self, **kwargs):
+    #     customer = models.Customer.objects.get(order=self.kwargs['pk'])
+    #     return {'customer': customer}
+
+    # def get_queryset(self):
+    #     qs = models.OrderItem.objects.filter(lider__in=self.object.lider.lider_list)
+    #     return qs
+
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.order_id = self.kwargs['pk']
@@ -96,7 +104,7 @@ class OrderItemAddView(generic.CreateView):
         return super(OrderItemAddView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('cart', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('orderItem-detail', kwargs={'pk': self.kwargs['pk']})
 
 
 class OrderItemUpdateView(generic.UpdateView):
@@ -105,14 +113,15 @@ class OrderItemUpdateView(generic.UpdateView):
     fields = ('lider', 'quantity_ordered', 'finished')
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('cart', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('orderItem-detail', kwargs={'pk': self.kwargs['pk']})
 
 
 def search_view(request):
+    # TODO fix search view
     if request.method == 'GET' and request.GET.get('q') != '':
         q = request.GET.get('q') if request.GET.get('q') is not None else ''
         orders = models.Order.objects.filter(Q(customer__name_company__icontains=q) |
-                                             Q(lider_id__lider_id__icontains=q))
+                                             Q(orderitem__lider_id__icontains=q))
         customers = models.Customer.objects.filter(Q(name_company__icontains=q))
         lider = models.Lider.objects.filter(Q(lider_id__icontains=q) |
                                             Q(doc_description__icontains=q) |

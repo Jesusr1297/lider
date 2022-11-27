@@ -16,6 +16,10 @@ class Customer(models.Model):
     def __str__(self):
         return self.name_company
 
+    @property
+    def lider_list(self):
+        return Lider.objects.filter(customer=self.id)
+
 
 class Lider(models.Model):
     lider_id = models.CharField('Numero de Lider', max_length=4,
@@ -48,18 +52,18 @@ class Order(models.Model):
 
 class Materials(models.Model):
     id = models.CharField(max_length=50, primary_key=True)
-    name = models.CharField(max_length=50, verbose_name='Nombre del Material')
-    quantity_ordered = models.IntegerField(verbose_name='Cantidad')
-    unit_code = models.CharField(max_length=5)
-    unit_price = models.FloatField(verbose_name='Precio')
+    name = models.CharField(max_length=50, verbose_name='Nombre del Material', null=True)
+    quantity_ordered = models.FloatField(verbose_name='Cantidad', default=0)
+    unit_code = models.CharField(max_length=5, verbose_name='Codigo Unidad', default='')
+    unit_price = models.FloatField(verbose_name='Precio', default=0)
     vat = models.CharField(max_length=4, choices=[('1.16', '16%'),
                                                   ('1.08', '8%'),
                                                   ('1', 'N/A')],
-                           default=1.08)
+                           default=1.08, verbose_name='Precio con IVA')
 
     @property
     def get_vat_price(self):
-        return float(self.vat) * self.price
+        return float(self.vat) * self.unit_price
 
     def __str__(self):
         return self.name
