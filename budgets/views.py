@@ -4,11 +4,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
-from django.utils.decorators import method_decorator
-from django.views import View
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
-
-from orders.models import Materials
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView, TemplateView
 from .forms import MaterialXMLForm
 from orders.models import Materials
@@ -27,6 +22,7 @@ def budget(request):
 class MaterialsView(ListView):
     model = Materials
     template_name = 'budgets/materials.html'
+    paginate_by = 5
 
 
 class MaterialsCreateView(SuccessMessageMixin, CreateView):
@@ -40,29 +36,16 @@ class MaterialsCreateView(SuccessMessageMixin, CreateView):
 class MaterialUploadXMLView(TemplateView):
     form_class = MaterialXMLForm
     template_name = 'materials/materialXML_form.html'
-    model = Materials
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     if request.method == 'GET':
-    #         return redirect('material-list')
-    #     return super().dispatch(self, request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, context={'form': self.form_class})
 
     def post(self, request, *args, **kwargs):
+        model = Materials
         xml = self.request.FILES['xml']
-        xml_to_model(xml, self.model)
-        messages.success(self.request, 'xml agregado con exito')
-        return reverse('material-list')
-
-
-def material_upload_xml(request):
-    model = Materials
-    form = MaterialXMLForm
-    if request.method == 'POST':
-        xml = request.FILES['xml']
         xml_to_model(xml, model)
+        messages.success(self.request, 'material agregado con éxito')
         return redirect('material-list')
-    context = {'form': form}
-    return render(request, template_name='materials/materialXML_form.html', context=context)
 
 
 class MaterialsDetailView(DetailView):

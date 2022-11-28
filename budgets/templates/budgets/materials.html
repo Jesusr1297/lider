@@ -3,10 +3,11 @@
 {% block content %}
     <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
-            <div class="grid grid-cols-3 text-center w-full mb-5">
-                <a  class="grid content-center justify-end" href="{% url 'material-create-xml' %}">Agregar materiales via XML</a>
+            <div class="grid grid-cols-3 text-center w-2/3 mb-5 mx-auto">
+                <a class="grid content-center justify-center" href="{% url 'material-create-xml' %}">Agregar materiales via
+                    XML</a>
                 <h1 class=" sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Materiales</h1>
-                <a class="grid content-center justify-start" href="{% url 'material-create' %}">Nuevo Material</a>
+                <a class="grid content-center justify-center" href="{% url 'material-create' %}">Nuevo Material</a>
             </div>
             <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                 <table class="table-auto w-full text-center whitespace-no-wrap">
@@ -34,9 +35,9 @@
                         <tr>
                             <td class="px-4 py-3">{{ object.name }}</td>
                             <td class="px-4 py-3">{{ object.unit_code }}</td>
-                            <td class="px-4 py-3">{{ object.quantity_ordered }}</td>
+                            <td class="px-4 py-3">{{ object.quantity_ordered|floatformat:'02g' }}</td>
                             <td class="px-4 py-3">${{ object.unit_price|floatformat:'02g' }}</td>
-                            <td class="px-4 py-4">${{ object.get_vat_price|floatformat:'02g'}}</td>
+                            <td class="px-4 py-4">${{ object.get_vat_price|floatformat:'02g' }}</td>
                         </tr>
                     {% endfor %}
 
