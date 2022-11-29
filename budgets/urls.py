@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (budget, MaterialsView, MaterialsCreateView,
                     MaterialsDetailView, MaterialsDeleteView,
-                    MaterialUpdateView, MaterialUploadXMLView, material_upload_xml)
+                    MaterialUpdateView, MaterialUploadXMLView)
 
 urlpatterns = [
     path('', budget, name='budgets'),

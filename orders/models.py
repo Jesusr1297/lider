@@ -35,7 +35,7 @@ class Lider(models.Model):
                                 default='reflex')
 
     def __str__(self):
-        return self.lider_id
+        return f'{self.lider_id} - {self.doc_description.lower()}'
 
 
 class Order(models.Model):
@@ -47,7 +47,7 @@ class Order(models.Model):
     paid = models.BooleanField(verbose_name='pagado', default=False)
 
     def __str__(self):
-        return f'{self.id:03d}'
+        return f'{self.id:03d} - {self.customer}'
 
 
 class Materials(models.Model):
@@ -72,6 +72,7 @@ class Materials(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     lider = models.ForeignKey(Lider, on_delete=models.DO_NOTHING)
+    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
     quantity_ordered = models.IntegerField()
     finished = models.BooleanField()
 
@@ -80,7 +81,7 @@ class OrderItem(models.Model):
         return 'Terminado' if self.finished else 'Pendiente'
 
     def __str__(self):
-        return f'{self.order}-{self.lider}'
+        return f'{self.order} - {self.lider}'
 
 
 class Quotation(models.Model):

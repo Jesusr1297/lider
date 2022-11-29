@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from . import models
-from .forms import OrderModelForm, OrderItemModelForm
+from .forms import OrderModelForm, OrderItemCreateModelForm, OrderItemUpdateModelForm
 
 
 class SignUpView(SuccessMessageMixin, generic.CreateView):
@@ -26,7 +26,7 @@ class LandingPageView(generic.TemplateView):
 class OrderListView(generic.ListView):
     model = models.Order
     template_name = 'orders/order_list.html'
-    ordering = ['id']
+    ordering = ['-id']
     paginate_by = 10
 
 
@@ -85,35 +85,37 @@ class OrderItemListView(generic.TemplateView):
         return render(request, template_name='orders/cart.html', context=context)
 
 
-class OrderItemAddView(generic.CreateView):
-    form_class = OrderItemModelForm
+class OrderItemAddView(generic.FormView):
+    form_class = OrderItemCreateModelForm
     template_name = 'orders/order_form.html'
 
-    # def get_context_data(self, **kwargs):
-    #     customer = models.Customer.objects.get(order=self.kwargs['pk'])
-    #     return {'customer': customer}
-
-    # def get_queryset(self):
-    #     qs = models.OrderItem.objects.filter(lider__in=self.object.lider.lider_list)
-    #     return qs
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(OrderItemAddView, self).get_form_kwargs(**kwargs)
+        kwargs.update({'pk': self.kwargs['pk']})
+        return kwargs
 
     def form_valid(self, form):
+        print(self.kwargs)
         instance = form.save(commit=False)
         instance.order_id = self.kwargs['pk']
+        instance.customer_id = models.Order.objects.get(id=instance.order_id).customer_id
         instance.save()
         return super(OrderItemAddView, self).form_valid(form)
 
     def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, 'Se ha agregado al pedido')
         return reverse_lazy('orderItem-detail', kwargs={'pk': self.kwargs['pk']})
 
 
 class OrderItemUpdateView(generic.UpdateView):
     template_name = 'orders/orderItem_update.html'
+    form_class = OrderItemUpdateModelForm
     model = models.OrderItem
-    fields = ('lider', 'quantity_ordered', 'finished')
 
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('orderItem-detail', kwargs={'pk': self.kwargs['pk']})
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, 'Se ha actualizado el pedido')
+        order_id = models.OrderItem.objects.get(id=self.kwargs['pk']).order_id
+        return reverse_lazy('orderItem-detail', kwargs={'pk': order_id})
 
 
 def search_view(request):
