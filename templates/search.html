@@ -23,18 +23,18 @@
                     </div>
                 {% endif %}
 
-                {% if lider %}
+                {% if liders %}
                     <div class="py-8 flex flex-nowrap">
                         <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                             <span class="font-semibold title-font text-gray-700">TRABAJOS</span>
                         </div>
                         <div class="flex flex-wrap">
-                            {% for l in lider %}
+                            {% for lider in liders %}
                                 <div class="text-center w-36 h-18 bg-gray-100 mx-1 my-1 rounded-lg flex flex-col items-center justify-center content-around p-1">
                                     <a class="text-lg font-medium text-gray-900 title-font text-center">
-                                        {{ l.lider_id }}
+                                        {{ lider.lider_id }}
                                     </a>
-                                    <a href="#">{{ l.customer }}</a>
+                                    <a href="#">{{ lider.customer }}</a>
                                     <a class="text-indigo-500 inline-flex items-center">Learn More</a>
                                 </div>
                             {% endfor %}
@@ -54,6 +54,25 @@
                                         {{ customer.name_company }}
                                     </a>
                                     <a class='flex flex-nowrap justify-center' href="#">{{ customer.phone_number }}</a>
+                                    <a class="text-indigo-500 inline-flex items-center">Learn More</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if materials %}
+                    <div class="py-8 flex flex-nowrap">
+                        <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+                            <span class="font-semibold title-font text-gray-700">MATERIALES</span>
+                        </div>
+                        <div class="flex flex-wrap">
+                            {% for material in materials %}
+                                <div class="text-center w-36 h-18 bg-gray-100 mx-1 my-1 rounded-lg flex flex-col items-center justify-center content-around p-1">
+                                    <a class="text-lg font-medium text-gray-900 title-font text-center flex items-center justify-center content-around">
+                                        {{ material.name }}
+                                    </a>
+                                    <a class='flex flex-nowrap justify-center' href="#">proveedor</a>
                                     <a class="text-indigo-500 inline-flex items-center">Learn More</a>
                                 </div>
                             {% endfor %}

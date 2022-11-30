@@ -1,14 +1,15 @@
 from django.urls import path
-from .views import *
+from . import views
 
 urlpatterns = [
-    path('', OrderListView.as_view(), name='order-list'),
-    # path('detalle/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
-    path('crear/', OrderCreateView.as_view(), name='order-create'),
-    path('editar/<int:pk>/', OrderUpdateView.as_view(), name='order-update'),
-    path('eliminar/<int:pk>/', OrderDeleteView.as_view(), name='order-delete'),
+    path('', views.OrderListView.as_view(), name='order-list'),
+    path('crear/', views.OrderCreateView.as_view(), name='order-create'),
+    path('detalle/<int:pk>/', views.OrderDetailView.as_view(), name='order-detail'),
+    path('editar/<int:pk>/', views.OrderUpdateView.as_view(), name='order-update'),
+    path('eliminar/<int:pk>/', views.OrderDeleteView.as_view(), name='order-delete'),
 
-    path('detalle/<int:pk>/', OrderItemListView.as_view(), name='orderItem-detail'),
-    path('crear-orden/<int:pk>/', OrderItemAddView.as_view(), name='orderItem-add'),
-    path('editar-orden/<int:pk>/', OrderItemUpdateView.as_view(), name='orderItem-update'),
+    path('ver-orden/<int:pk>/', views.OrderItemListView.as_view(), name='orderItem-list'),
+    path('crear-orden/<int:pk>/', views.OrderItemCreateView.as_view(), name='orderItem-create'),
+    path('editar-orden/<int:pk>/', views.OrderItemUpdateView.as_view(), name='orderItem-update'),
+    path('eliminar-orden/<int:pk>/', views.OrderItemDeleteView.as_view(), name='orderItem-delete')
 ]

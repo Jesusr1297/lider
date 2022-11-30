@@ -50,7 +50,7 @@ class Order(models.Model):
         return f'{self.id:03d} - {self.customer}'
 
 
-class Materials(models.Model):
+class Material(models.Model):
     id = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=50, verbose_name='Nombre del Material', null=True)
     quantity_ordered = models.FloatField(verbose_name='Cantidad', default=0)
@@ -81,7 +81,7 @@ class OrderItem(models.Model):
         return 'Terminado' if self.finished else 'Pendiente'
 
     def __str__(self):
-        return f'{self.order} - {self.lider}'
+        return f'{self.order} - {self.lider} - {self.id}'
 
 
 class Quotation(models.Model):
@@ -94,7 +94,7 @@ class Quotation(models.Model):
 class QuotationItem(models.Model):
     quotation = models.ForeignKey(Quotation, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField()
-    material = models.ForeignKey(Materials, on_delete=models.SET_NULL, null=True)
+    material = models.ForeignKey(Material, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.id

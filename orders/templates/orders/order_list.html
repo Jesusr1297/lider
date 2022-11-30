@@ -32,7 +32,7 @@
                             <td class="px-4 py-3">{{ object.id|stringformat:'04d' }}</td>
                             <td class="px-4 py-3">{{ object.customer|lower }}</td>
                             <td class="px-4 py-3">{{ object.date_ordered }}</td>
-                            <td><a class="px-4 py-3" href="{% url 'orderItem-detail' object.id %}">Detalle</a></td>
+                            <td><a class="px-4 py-3" href="{% url 'orderItem-list' object.id %}">Ver</a></td>
                             <td class="w-10 text-center">
                                 <input name="plan" type="radio">
                             </td>

@@ -5,5 +5,5 @@ from . import models
 admin.site.register(models.Customer)
 admin.site.register(models.Order)
 admin.site.register(models.Lider)
-admin.site.register(models.Materials)
+admin.site.register(models.Material)
 admin.site.register(models.OrderItem)

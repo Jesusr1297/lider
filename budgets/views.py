@@ -6,7 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView, TemplateView
 from .forms import MaterialXMLForm
-from orders.models import Materials
+from orders.models import Material
 from .utils import xml_to_model
 
 
@@ -20,13 +20,13 @@ def budget(request):
 
 
 class MaterialsView(ListView):
-    model = Materials
+    model = Material
     template_name = 'budgets/materials.html'
     paginate_by = 5
 
 
 class MaterialsCreateView(SuccessMessageMixin, CreateView):
-    model = Materials
+    model = Material
     template_name = 'budgets/material_form.html'
     success_message = 'Se ha agregado un nuevo material'
     fields = '__all__'
@@ -41,7 +41,7 @@ class MaterialUploadXMLView(TemplateView):
         return render(request, self.template_name, context={'form': self.form_class})
 
     def post(self, request, *args, **kwargs):
-        model = Materials
+        model = Material
         xml = self.request.FILES['xml']
         xml_to_model(xml, model)
         messages.success(self.request, 'material agregado con éxito')
@@ -49,12 +49,12 @@ class MaterialUploadXMLView(TemplateView):
 
 
 class MaterialsDetailView(DetailView):
-    model = Materials
+    model = Material
     template_name = 'budgets/material_detail.html'
 
 
 class MaterialsDeleteView(LoginRequiredMixin, DeleteView):
-    model = Materials
+    model = Material
     template_name = 'budgets/material_confirm_delete.html'
 
     def get_success_url(self):
@@ -63,7 +63,7 @@ class MaterialsDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class MaterialUpdateView(UpdateView):
-    model = Materials
+    model = Material
     fields = '__all__'
     template_name = 'budgets/material_update.html'
 
