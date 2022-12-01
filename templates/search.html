@@ -34,8 +34,9 @@
                                     <a class="text-lg font-medium text-gray-900 title-font text-center">
                                         {{ lider.lider_id }}
                                     </a>
-                                    <a href="#">{{ lider.customer }}</a>
-                                    <a class="text-indigo-500 inline-flex items-center">Learn More</a>
+                                    <a>{{ lider.customer }}</a>
+                                    <a class="text-indigo-500 inline-flex items-center"
+                                    href="{% url 'lider-detail' lider.lider_id %}">Detalle</a>
                                 </div>
                             {% endfor %}
                         </div>
@@ -53,8 +54,9 @@
                                     <a class="text-lg font-medium text-gray-900 title-font text-center flex items-center justify-center content-around">
                                         {{ customer.name_company }}
                                     </a>
-                                    <a class='flex flex-nowrap justify-center' href="#">{{ customer.phone_number }}</a>
-                                    <a class="text-indigo-500 inline-flex items-center">Learn More</a>
+                                    <a class='flex flex-nowrap justify-center'>{{ customer.phone_number }}</a>
+                                    <a class="text-indigo-500 inline-flex items-center"
+                                       href="{% url 'customer-detail' customer.id %}">Detalle</a>
                                 </div>
                             {% endfor %}
                         </div>

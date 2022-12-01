@@ -1,31 +1,26 @@
-from bs4 import BeautifulSoup
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
-from django.contrib import messages
-from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView, TemplateView
+from django.views import generic
+
 from .forms import MaterialXMLForm
 from orders.models import Material
 from .utils import xml_to_model
-
-
-# class BudgetView(ListView):
-#     model =
-#     template_name = 'orders/budget.html'
 
 
 def budget(request):
     return render(request, 'budgets/budget.html')
 
 
-class MaterialsView(ListView):
+class MaterialsView(generic.ListView):
     model = Material
     template_name = 'budgets/materials.html'
     paginate_by = 5
 
 
-class MaterialsCreateView(SuccessMessageMixin, CreateView):
+class MaterialsCreateView(SuccessMessageMixin, generic.CreateView):
     model = Material
     template_name = 'budgets/material_form.html'
     success_message = 'Se ha agregado un nuevo material'
@@ -33,7 +28,8 @@ class MaterialsCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('material-list')
 
 
-class MaterialUploadXMLView(TemplateView):
+class MaterialUploadXMLView(generic.TemplateView):
+    """ View that handles xml upload and updates material model"""
     form_class = MaterialXMLForm
     template_name = 'materials/materialXML_form.html'
 
@@ -41,19 +37,25 @@ class MaterialUploadXMLView(TemplateView):
         return render(request, self.template_name, context={'form': self.form_class})
 
     def post(self, request, *args, **kwargs):
+        # specify arguments that will input in function
         model = Material
         xml = self.request.FILES['xml']
+
+        # pass arguments to function, extracts all products from xml file
+        # updates the model with the information obtained
         xml_to_model(xml, model)
+
+        # pass success message and return to list view
         messages.success(self.request, 'material agregado con éxito')
         return redirect('material-list')
 
 
-class MaterialsDetailView(DetailView):
+class MaterialsDetailView(generic.DetailView):
     model = Material
     template_name = 'budgets/material_detail.html'
 
 
-class MaterialsDeleteView(LoginRequiredMixin, DeleteView):
+class MaterialsDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Material
     template_name = 'budgets/material_confirm_delete.html'
 
@@ -62,7 +64,7 @@ class MaterialsDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('material-list')
 
 
-class MaterialUpdateView(UpdateView):
+class MaterialUpdateView(generic.UpdateView):
     model = Material
     fields = '__all__'
     template_name = 'budgets/material_update.html'

@@ -29,9 +29,9 @@ class SearchView(generic.TemplateView):
         if q != '':
             orders = models.Order.objects.filter(Q(id__contains=q))
             customers = models.Customer.objects.filter(Q(name_company__icontains=q))
-            liders = models.Lider.objects.filter(Q(lider_id__icontains=q) |
-                                                 Q(doc_description__icontains=q) |
-                                                 Q(doc_inks__icontains=q))
+            liders = models.Lider.objects.filter(Q(lider_id__icontains=q)
+                                                 | Q(doc_description__icontains=q)
+                                                 | Q(doc_inks__icontains=q))
             material = models.Material.objects.filter(Q(name__icontains=q))
             context = {'orders': orders, 'customers': customers, 'liders': liders, 'materials': material}
             return render(request, template_name=self.template_name, context=context)

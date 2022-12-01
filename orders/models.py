@@ -20,6 +20,10 @@ class Customer(models.Model):
     def lider_list(self):
         return Lider.objects.filter(customer=self.id)
 
+    @property
+    def delivery(self):
+        return 'Entrega a Domicilio' if self.shipping else 'Recoge en Tienda'
+
 
 class Lider(models.Model):
     lider_id = models.CharField('Numero de Lider', max_length=4,
@@ -36,6 +40,11 @@ class Lider(models.Model):
 
     def __str__(self):
         return f'{self.lider_id} - {self.doc_description.lower()}'
+
+    @property
+    def last_ordered(self):
+        last_orderitem_id = Order.objects.filter(orderitem__lider__lider_id=self.lider_id).last().date_ordered
+        return last_orderitem_id
 
 
 class Order(models.Model):

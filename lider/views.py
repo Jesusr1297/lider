@@ -11,7 +11,7 @@ from orders.models import Lider
 
 class LiderView(ListView):
     model = Lider
-    template_name = 'lider/lider.html'
+    template_name = 'lider/lider_list.html'
     ordering = ['-lider_id']
 
 
@@ -41,7 +41,6 @@ class LiderUpdateView(UpdateView):
 class LiderDeleteView(LoginRequiredMixin, DeleteView):
     model = Lider
     template_name = 'lider/lider_confirm_delete.html'
-
     login_url = 'login'
 
     def get_success_url(self):

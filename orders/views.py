@@ -1,12 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from . import models
-from .forms import OrderModelForm, OrderItemCreateModelForm, OrderItemUpdateModelForm
+from . import forms, models
 
 
 class OrderListView(generic.ListView):
@@ -25,12 +24,20 @@ class OrderPendingListView(generic.ListView):
 
 
 class OrderCreateView(SuccessMessageMixin, generic.CreateView):
-    form_class = OrderModelForm
+    form_class = forms.OrderModelForm
     template_name = 'orders/order_form.html'
     success_message = 'Se ha creado una nueva orden'
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('orderItem-list', kwargs={'pk': self.object.pk})
+
+
+class OrderCreateFromCustomerView(generic.TemplateView):
+    """Create a new order from customer detail view"""
+    def get(self, request, *args, **kwargs):
+        customers_id = kwargs['pk']
+        new_order = models.Order.objects.create(customer_id=customers_id)
+        return redirect('orderItem-list', new_order.id)
 
 
 class OrderDetailView(generic.DetailView):
@@ -43,12 +50,6 @@ class OrderUpdateView(generic.UpdateView):
     fields = '__all__'
     template_name = 'orders/order_update.html'
 
-    """
-    Se utiliza la funcion get_success_url en lugar del metodo success_url para poder agregar
-    el mensaje de actualizacion en el color que necesitamos, ya que SuccessMessageMixin solo 
-    nos permite agregar mensajes de SUCCESS, en esto caso nosotros queremos uno de INFO.
-    """
-
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Se ha actualizado la orden')
         return reverse_lazy('order-detail', kwargs={'pk': self.get_object().id})
@@ -56,13 +57,6 @@ class OrderUpdateView(generic.UpdateView):
 
 class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = models.Order
-    """
-    Se puede usar directamente success_url para regresar al menu principal, 
-    pero al nosotros querer agregar un mensaje, sobre escribimos el metodo
-    y agregamos el mensaje en get_success_url
-    """
-
-    # success_url = reverse_lazy('home')
 
     def get_success_url(self):
         messages.error(self.request, f'Se ha eliminado la orden: {self.object.id:03d}')
@@ -80,16 +74,24 @@ class OrderItemListView(generic.TemplateView):
 
 
 class OrderItemCreateView(generic.FormView):
-    form_class = OrderItemCreateModelForm
+    form_class = forms.OrderItemCreateModelForm
     template_name = 'orders/order_form.html'
 
     def get_form_kwargs(self, **kwargs):
+        """ We need pass custom kwargs to form (because working with FormView"""
+
+        # Instantiate kwargs by calling the function with super
         kwargs = super(OrderItemCreateView, self).get_form_kwargs(**kwargs)
+
+        # updating values, in this case pk, it's what we need to pass to form
         kwargs.update({'pk': self.kwargs['pk']})
+
+        # returning updated dictionary
         return kwargs
 
     def form_valid(self, form):
-        print(self.kwargs)
+        # Before updating the model we add missing fields that
+        # user cannot write for security reasons
         instance = form.save(commit=False)
         instance.order_id = self.kwargs['pk']
         instance.customer_id = models.Order.objects.get(id=instance.order_id).customer_id
@@ -103,7 +105,7 @@ class OrderItemCreateView(generic.FormView):
 
 class OrderItemUpdateView(generic.UpdateView):
     template_name = 'orders/orderItem_update.html'
-    form_class = OrderItemUpdateModelForm
+    form_class = forms.OrderItemUpdateModelForm
     model = models.OrderItem
 
     def get_success_url(self):
@@ -118,4 +120,3 @@ class OrderItemDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_success_url(self):
         order_id = models.OrderItem.objects.get(id=self.kwargs['pk']).order_id
         return reverse_lazy('orderItem-list', kwargs={'pk': order_id})
-

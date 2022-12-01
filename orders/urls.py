@@ -11,5 +11,7 @@ urlpatterns = [
     path('ver-orden/<int:pk>/', views.OrderItemListView.as_view(), name='orderItem-list'),
     path('crear-orden/<int:pk>/', views.OrderItemCreateView.as_view(), name='orderItem-create'),
     path('editar-orden/<int:pk>/', views.OrderItemUpdateView.as_view(), name='orderItem-update'),
-    path('eliminar-orden/<int:pk>/', views.OrderItemDeleteView.as_view(), name='orderItem-delete')
+    path('eliminar-orden/<int:pk>/', views.OrderItemDeleteView.as_view(), name='orderItem-delete'),
+
+    path('crear/<int:pk>/', views.OrderCreateFromCustomerView.as_view(), name='order-create-from-customer'),
 ]

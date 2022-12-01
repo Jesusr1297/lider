@@ -18,6 +18,16 @@ class CustomerDetailView(DetailView):
     model = Customer
     template_name = 'customers/customer_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(CustomerDetailView, self).get_context_data(**kwargs)
+        customer_id = kwargs['object'].id
+        queryset = Lider.objects.filter(customer_id=customer_id).order_by('-lider_id')
+
+        context.update({
+            "lider_list": queryset
+        })
+        return context
+
 
 class CustomerCreateView(SuccessMessageMixin, CreateView):
     model = Customer
