@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
+from django.core.exceptions import ValidationError
+from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, redirect
 from django.views import generic
 
@@ -17,6 +18,7 @@ def budget(request):
 class MaterialsView(generic.ListView):
     model = Material
     template_name = 'budgets/materials.html'
+    ordering = ('id',)
     paginate_by = 5
 
 
@@ -28,26 +30,22 @@ class MaterialsCreateView(SuccessMessageMixin, generic.CreateView):
     success_url = reverse_lazy('material-list')
 
 
-class MaterialUploadXMLView(generic.TemplateView):
+class MaterialUploadXMLView(generic.FormView):
     """ View that handles xml upload and updates material model"""
     form_class = MaterialXMLForm
     template_name = 'materials/materialXML_form.html'
+    model = Material
 
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, context={'form': self.form_class})
-
-    def post(self, request, *args, **kwargs):
-        # specify arguments that will input in function
-        model = Material
-        xml = self.request.FILES['xml']
-
-        # pass arguments to function, extracts all products from xml file
-        # updates the model with the information obtained
-        xml_to_model(xml, model)
-
-        # pass success message and return to list view
+    def get_success_url(self):
         messages.success(self.request, 'material agregado con éxito')
-        return redirect('material-list')
+        return reverse('material-list')
+
+    def form_valid(self, form):
+        # if form is valid we extract xml file and upload data to model
+        xml = form.cleaned_data['xml']
+        xml_to_model(xml, self.model)
+        return super(MaterialUploadXMLView, self).form_valid(form)
+
 
 
 class MaterialsDetailView(generic.DetailView):
