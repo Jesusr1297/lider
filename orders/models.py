@@ -1,11 +1,7 @@
-import datetime
-
-from django.db import models
-# from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
+from django.db import models
 
 
-# Create your models here.
 class Customer(models.Model):
     name_company = models.CharField(verbose_name='Nombre/Empresa', max_length=50)
     email = models.EmailField(verbose_name='Correo', null=True)
@@ -59,9 +55,37 @@ class Order(models.Model):
         return f'{self.id:03d} - {self.customer}'
 
 
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    lider = models.ForeignKey(Lider, on_delete=models.DO_NOTHING)
+    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
+    quantity_ordered = models.IntegerField()
+    finished = models.BooleanField()
+
+    @property
+    def status(self):
+        return 'Terminado' if self.finished else 'Pendiente'
+
+    def __str__(self):
+        return f'{self.order} - {self.lider} - {self.id}'
+
+
+class Supplier(models.Model):
+    id = models.CharField(max_length=13, primary_key=True, verbose_name='RFC')
+    name = models.CharField(max_length=50, blank=True, null=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+
+
+class Budget(models.Model):
+    pass
+
+
 class Material(models.Model):
     id = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=50, verbose_name='Nombre del Material', null=True)
+
+    supplier_id = models.ForeignKey(Supplier, on_delete=models.SET_NULL, null=True)
+
     quantity_ordered = models.FloatField(verbose_name='Cantidad', default=0)
     unit_code = models.CharField(max_length=5, verbose_name='Codigo Unidad', default='')
     unit_price = models.FloatField(verbose_name='Precio', default=0)
@@ -76,21 +100,6 @@ class Material(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    lider = models.ForeignKey(Lider, on_delete=models.DO_NOTHING)
-    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
-    quantity_ordered = models.IntegerField()
-    finished = models.BooleanField()
-
-    @property
-    def status(self):
-        return 'Terminado' if self.finished else 'Pendiente'
-
-    def __str__(self):
-        return f'{self.order} - {self.lider} - {self.id}'
 
 
 class Quotation(models.Model):

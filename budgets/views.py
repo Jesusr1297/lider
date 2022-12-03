@@ -47,6 +47,12 @@ class MaterialUploadXMLView(generic.FormView):
         return super(MaterialUploadXMLView, self).form_valid(form)
 
 
+class MaterialUploadXMLConfirmView(generic.FormView):
+    pass
+    # id_list = list_of_ids_from_checkboxes
+    # MyModel.objects.filter(id__in=id_list).update(myattribute=True)
+
+
 
 class MaterialsDetailView(generic.DetailView):
     model = Material
