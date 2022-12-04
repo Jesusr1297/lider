@@ -75,6 +75,9 @@ class Supplier(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=50, null=True, blank=True)
 
+    def __str__(self):
+        return self.id
+
 
 class Budget(models.Model):
     pass

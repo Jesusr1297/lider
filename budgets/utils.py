@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 
+from orders.models import Supplier, Material
+
 
 def xml_to_model(xml_file, model):
     """
@@ -13,6 +15,11 @@ def xml_to_model(xml_file, model):
     # Find all the tags named 'cfdi:Concepto'
     concepts = soup.find_all('cfdi:Concepto')
 
+    supplier = soup.find('cfdi:Emisor')
+    rfc = supplier.attrs['Rfc']
+    name = supplier.attrs['Nombre']
+    supplier_obj, created = Supplier.objects.get_or_create(id=rfc, name=name)
+
     # For every tag found (which means every product added)
     # we update its values, then we saved the object
     for tag in concepts:
@@ -22,5 +29,6 @@ def xml_to_model(xml_file, model):
         obj.unit_code = tag['Unidad']
         obj.unit_price = float(tag['ValorUnitario'])
         obj.vat = float(tag.find('cfdi:Traslado')['TasaOCuota']) + 1
+        obj.supplier_id = supplier_obj
         obj.save()
     return
