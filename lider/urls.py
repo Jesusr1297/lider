@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import (LiderView, LiderCreateView, LiderDetailView, LiderUpdateView, LiderDeleteView)
+from .views import (LiderView, LiderCreateView, LiderDetailView,
+                    LiderUpdateView, LiderDeleteView)
 
 urlpatterns = [
     path('', LiderView.as_view(), name='lider'),

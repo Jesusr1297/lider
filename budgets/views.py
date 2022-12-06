@@ -48,6 +48,7 @@ class MaterialUploadXMLView(generic.FormView):
 
 
 class MaterialUploadXMLConfirmView(generic.FormView):
+    # todo
     pass
     # id_list = list_of_ids_from_checkboxes
     # MyModel.objects.filter(id__in=id_list).update(myattribute=True)

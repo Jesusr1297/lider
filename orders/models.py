@@ -76,7 +76,7 @@ class Supplier(models.Model):
     city = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
-        return self.id
+        return f'{self.id} - {self.name}'
 
 
 class Budget(models.Model):
