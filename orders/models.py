@@ -25,22 +25,16 @@ class Lider(models.Model):
     lider_id = models.CharField('Numero de Lider', max_length=4,
                                 validators=[RegexValidator(r'^\d{1,10}$')], primary_key=True)
     doc_description = models.CharField(verbose_name='Descripcion del formato',
-                                       max_length=250, default='NOTA DE VENTA')
+                                       max_length=250)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default='')
-    doc_inks = models.CharField(max_length=14, choices=[('negra', 'NEGRA'),
-                                                        ('reflex', 'AZUL REFLEX'),
-                                                        ('rojo032', 'ROJO 032CV'),
-                                                        ('naranjaDirecto', 'NARANJA DIRECTO')
-                                                        ],
-                                default='reflex')
 
     def __str__(self):
         return f'{self.lider_id} - {self.doc_description.lower()}'
 
     @property
     def last_ordered(self):
-        last_orderitem_id = Order.objects.filter(orderitem__lider__lider_id=self.lider_id).last().date_ordered
-        return last_orderitem_id
+        last_orderitem = Order.objects.filter(orderitem__lider__lider_id=self.lider_id).last()
+        return last_orderitem.date_ordered if last_orderitem else "No ordenado"
 
 
 class Order(models.Model):
@@ -48,11 +42,21 @@ class Order(models.Model):
     date_ordered = models.DateField('Fecha ordenada', auto_now=True)
     expected_delivery_date = models.DateField('Fecha esperada de Entrega', auto_now=True)
     completed = models.BooleanField(verbose_name='Terminado', default=False)
-    delivered = models.BooleanField(verbose_name='entregado', default=False)
-    paid = models.BooleanField(verbose_name='pagado', default=False)
+    delivered = models.BooleanField(verbose_name='Entregado', default=False)
+    date_delivered = models.DateField(verbose_name='Fecha de Entrega', null=True, blank=True)
+    paid = models.BooleanField(verbose_name='Pagado', default=False)
+    date_paid = models.DateField(verbose_name='Fecha de Pago',null=True, blank=True)
 
     def __str__(self):
         return f'{self.id:03d} - {self.customer}'
+
+    @property
+    def completed_str(self):
+        return 'Terminado' if self.completed else 'No Terminado'
+
+    @property
+    def delivered_str(self):
+        return 'Entregado' if self.delivered else 'No Entregado'
 
 
 class OrderItem(models.Model):

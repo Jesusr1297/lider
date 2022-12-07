@@ -47,7 +47,7 @@ class OrderDetailView(generic.DetailView):
 
 class OrderUpdateView(generic.UpdateView):
     model = models.Order
-    fields = '__all__'
+    fields = ('completed', 'delivered', 'date_delivered', 'paid', 'date_paid')
     template_name = 'orders/order_update.html'
 
     def get_success_url(self):
