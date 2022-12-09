@@ -10,16 +10,14 @@ from . import forms, models
 
 class OrderListView(generic.ListView):
     model = models.Order
-    template_name = 'orders/order_list.html'
+    template_name = 'orders/order_complete_list.html'
     ordering = ['-id']
-    paginate_by = 10
 
 
 class OrderPendingListView(generic.ListView):
-    # todo filter between finished and not finished orders
     queryset = models.Order.objects.filter(completed=False)
     template_name = 'orders/order_list.html'
-    ordering = ['-id']
+    ordering = ['id']
     paginate_by = 10
 
 
@@ -47,7 +45,7 @@ class OrderDetailView(generic.DetailView):
 
 class OrderUpdateView(generic.UpdateView):
     model = models.Order
-    fields = ('completed', 'delivered', 'date_delivered', 'paid', 'date_paid')
+    form_class = forms.OrderUpdateModelForm
     template_name = 'orders/order_update.html'
 
     def get_success_url(self):

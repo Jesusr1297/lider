@@ -1,6 +1,8 @@
 from django.core.validators import RegexValidator
 from django.db import models
 
+import datetime
+
 
 class Customer(models.Model):
     name_company = models.CharField(verbose_name='Nombre/Empresa', max_length=50)
@@ -38,9 +40,9 @@ class Lider(models.Model):
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name='Cliente')
     date_ordered = models.DateField('Fecha ordenada', auto_now=True)
-    expected_delivery_date = models.DateField('Fecha esperada de Entrega', auto_now=True)
+    expected_delivery_date = models.DateField('Fecha esperada de Entrega', default=(datetime.datetime.now()+datetime.timedelta(days=3)))
     completed = models.BooleanField(verbose_name='Terminado', default=False)
     delivered = models.BooleanField(verbose_name='Entregado', default=False)
     date_delivered = models.DateField(verbose_name='Fecha de Entrega', null=True, blank=True)
@@ -58,17 +60,31 @@ class Order(models.Model):
     def delivered_str(self):
         return 'Entregado' if self.delivered else 'No Entregado'
 
+    @property
+    def get_subtotal(self):
+        items = OrderItem.objects.filter(order_id=self.id)
+        items_sum = sum(item.price for item in items)
+        return items_sum
+
+    def get_total(self):
+        return self.get_subtotal * 1.08
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     lider = models.ForeignKey(Lider, on_delete=models.DO_NOTHING)
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
-    quantity_ordered = models.IntegerField()
-    finished = models.BooleanField()
+    quantity_ordered = models.IntegerField(verbose_name='Cantidad')
+    finished = models.BooleanField('Terminado')
+    unit_price = models.DecimalField(null=True, blank=True, max_digits=6,decimal_places=4, verbose_name='Precio Unitario')
 
     @property
     def status(self):
         return 'Terminado' if self.finished else 'Pendiente'
+
+    @property
+    def price(self):
+        return int(self.quantity_ordered) * float(self.unit_price) if self.unit_price else 0
 
     def __str__(self):
         return f'{self.order} - {self.lider} - {self.id}'

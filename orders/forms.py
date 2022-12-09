@@ -1,13 +1,30 @@
 from django import forms
 from .models import Order, OrderItem, Customer, Lider
 
+date_widget = {
+    'field': forms.DateInput(format=('%m/%d/%Y'),
+                             attrs={'class': 'form-control', 'placeholder': 'Select a date',
+                                    'type': 'date'}),
+}
+
 
 class OrderModelForm(forms.ModelForm):
-    raw_id_fields = ("lider",)
-
     class Meta:
         model = Order
-        fields = ['customer']
+        fields = ['customer', 'expected_delivery_date']
+        widgets = {
+            'expected_delivery_date': date_widget['field']
+        }
+
+
+class OrderUpdateModelForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['completed', 'delivered', 'date_delivered', 'paid', 'date_paid']
+        widgets = {
+            'date_delivered': date_widget['field'],
+            'date_paid': date_widget['field'],
+        }
 
 
 class OrderItemCreateModelForm(forms.ModelForm):
@@ -39,7 +56,7 @@ class OrderItemCreateModelForm(forms.ModelForm):
 
     class Meta:
         model = OrderItem
-        fields = ('lider', 'quantity_ordered', 'finished')
+        fields = ('lider', 'quantity_ordered', 'unit_price', 'finished')
 
 
 class OrderItemUpdateModelForm(forms.ModelForm):

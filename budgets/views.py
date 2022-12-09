@@ -17,7 +17,7 @@ def budget(request):
 
 class MaterialsView(generic.ListView):
     model = Material
-    template_name = 'budgets/materials.html'
+    template_name = 'materials/material_list.html'
     ordering = ('id',)
     paginate_by = 5
 
