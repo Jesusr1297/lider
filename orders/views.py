@@ -44,9 +44,15 @@ class OrderDetailView(generic.DetailView):
 
 
 class OrderUpdateView(generic.UpdateView):
-    model = models.Order
-    form_class = forms.OrderUpdateModelForm
+    # form_class = forms.OrderUpdateModelForm
     template_name = 'orders/order_update.html'
+
+    def get_queryset(self):
+        return models.Order.objects.get(id=self.kwargs['pk'])
+
+    def get_form_class(self):
+        instance = models.Order.objects.get(id=self.kwargs['pk'])
+        return forms.OrderUpdateModelForm(instance=instance)
 
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Se ha actualizado la orden')
