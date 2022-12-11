@@ -32,6 +32,7 @@ class OrderCreateView(SuccessMessageMixin, generic.CreateView):
 
 class OrderCreateFromCustomerView(generic.TemplateView):
     """Create a new order from customer detail view"""
+
     def get(self, request, *args, **kwargs):
         customers_id = kwargs['pk']
         new_order = models.Order.objects.create(customer_id=customers_id)
@@ -44,19 +45,13 @@ class OrderDetailView(generic.DetailView):
 
 
 class OrderUpdateView(generic.UpdateView):
-    # form_class = forms.OrderUpdateModelForm
     template_name = 'orders/order_update.html'
-
-    def get_queryset(self):
-        return models.Order.objects.get(id=self.kwargs['pk'])
-
-    def get_form_class(self):
-        instance = models.Order.objects.get(id=self.kwargs['pk'])
-        return forms.OrderUpdateModelForm(instance=instance)
+    form_class = forms.OrderUpdateModelForm
+    model = models.Order
 
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Se ha actualizado la orden')
-        return reverse_lazy('order-detail', kwargs={'pk': self.get_object().id})
+        return reverse_lazy('order-detail', kwargs={'pk': self.kwargs['pk']})
 
 
 class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):

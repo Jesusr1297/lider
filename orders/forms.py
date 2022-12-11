@@ -21,10 +21,6 @@ class OrderUpdateModelForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['completed', 'delivered', 'date_delivered', 'paid', 'date_paid']
-        widgets = {
-            'date_delivered': date_widget['field'],
-            'date_paid': date_widget['field'],
-        }
 
 
 class OrderItemCreateModelForm(forms.ModelForm):
