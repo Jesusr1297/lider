@@ -44,8 +44,10 @@ class Order(models.Model):
     date_ordered = models.DateField('Fecha ordenada', auto_now=True)
     expected_delivery_date = models.DateField('Fecha esperada de Entrega', default=(datetime.datetime.now()+datetime.timedelta(days=3)))
     completed = models.BooleanField(verbose_name='Terminado', default=False)
+
     delivered = models.BooleanField(verbose_name='Entregado', default=False)
     date_delivered = models.DateField(verbose_name='Fecha de Entrega', null=True, blank=True)
+
     paid = models.BooleanField(verbose_name='Pagado', default=False)
     date_paid = models.DateField(verbose_name='Fecha de Pago',null=True, blank=True)
 
