@@ -42,25 +42,28 @@ class Lider(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name='Cliente')
     date_ordered = models.DateField('Fecha ordenada', auto_now=True)
-    expected_delivery_date = models.DateField('Fecha esperada de Entrega', default=(datetime.datetime.now()+datetime.timedelta(days=3)))
-    completed = models.BooleanField(verbose_name='Terminado', default=False)
+    expected_delivery_date = models.DateField('Fecha esperada de Entrega',
+                                              default=(datetime.datetime.now() + datetime.timedelta(days=3)))
 
-    delivered = models.BooleanField(verbose_name='Entregado', default=False)
-    date_delivered = models.DateField(verbose_name='Fecha de Entrega', null=True, blank=True)
+    delivered = models.DateField(verbose_name='Fecha de Entrega', null=True, blank=True)
 
-    paid = models.BooleanField(verbose_name='Pagado', default=False)
-    date_paid = models.DateField(verbose_name='Fecha de Pago',null=True, blank=True)
+    paid = models.DateField(verbose_name='Fecha de Pago', null=True, blank=True)
+
+    invoice = models.IntegerField(verbose_name='Factura Asociada', null=True, blank=True)
 
     def __str__(self):
         return f'{self.id:03d} - {self.customer}'
 
     @property
-    def completed_str(self):
-        return 'Terminado' if self.completed else 'No Terminado'
+    def completed(self):
+        order_items = OrderItem.objects.filter(order_id=self.id)
+        order_item_count = order_items.count()
+        order_item_finished = order_items.filter(finished=True).count()
+        return order_item_count == order_item_finished
 
     @property
     def delivered_str(self):
-        return 'Entregado' if self.delivered else 'No Entregado'
+        return self.delivered if self.delivered else 'No Entregado'
 
     @property
     def get_subtotal(self):
@@ -68,8 +71,13 @@ class Order(models.Model):
         items_sum = sum(item.price for item in items)
         return items_sum
 
+    @property
     def get_total(self):
         return self.get_subtotal * 1.08
+
+    @property
+    def lider_list(self):
+        return Lider.objects.filter(orderitem__order=self.id)
 
 
 class OrderItem(models.Model):
@@ -78,7 +86,8 @@ class OrderItem(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
     quantity_ordered = models.IntegerField(verbose_name='Cantidad')
     finished = models.BooleanField('Terminado')
-    unit_price = models.DecimalField(null=True, blank=True, max_digits=6,decimal_places=4, verbose_name='Precio Unitario')
+    unit_price = models.DecimalField(null=True, blank=True, max_digits=6, decimal_places=4,
+                                     verbose_name='Precio Unitario')
 
     @property
     def status(self):

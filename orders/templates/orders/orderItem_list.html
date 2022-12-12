@@ -48,16 +48,34 @@
                 </table>
             </div>
             <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto">
-                <a class="text-purple-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <a class="text-purple-500 inline-flex items-center md:mb-2 lg:mb-0"
+                   href="{% url 'order-detail' order.id %}">Mas Información
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                          stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
                         <path d="M5 12h14M12 5l7 7-7 7"></path>
                     </svg>
                 </a>
-                <a class="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"
-                   href="{% url 'order-detail' order.id %}">
-                    Detalle
-                </a>
+                {% if not order.completed %}
+                    <a class="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"
+                       href="{% url 'order-mark-as-completed' order.id %}">
+                        Marcar como terminada
+                    </a>
+                {% elif not order.delivered %}
+                    <a class="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"
+                       href="#">
+                        Marcar como entregada
+                    </a>
+                {% elif not order.paid %}
+                    <a class="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"
+                       href="#">
+                        Marcar como pagada
+                    </a>
+                {% else %}
+                    <a class="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"
+                       href="#">
+                        Repetir Orden
+                    </a>
+                {% endif %}
             </div>
 
         </div>

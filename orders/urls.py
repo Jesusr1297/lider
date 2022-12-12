@@ -15,4 +15,5 @@ urlpatterns = [
     path('eliminar-orden/<int:pk>/', views.OrderItemDeleteView.as_view(), name='orderItem-delete'),
 
     path('crear/<int:pk>/', views.OrderCreateFromCustomerView.as_view(), name='order-create-from-customer'),
+    path('marcar-como-completado/<int:pk>/', views.OrderMarkAsCompleted.as_view(), name='order-mark-as-completed'),
 ]

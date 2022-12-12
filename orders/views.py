@@ -15,9 +15,8 @@ class OrderListView(generic.ListView):
 
 
 class OrderPendingListView(generic.ListView):
-    queryset = models.Order.objects.filter(completed=False)
+    queryset = models.Order.objects.filter(orderitem__finished=False).distinct()
     template_name = 'orders/order_list.html'
-    ordering = ['id']
     paginate_by = 10
 
 
@@ -119,3 +118,15 @@ class OrderItemDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_success_url(self):
         order_id = models.OrderItem.objects.get(id=self.kwargs['pk']).order_id
         return reverse_lazy('orderItem-list', kwargs={'pk': order_id})
+
+
+class OrderMarkAsCompleted(generic.TemplateView):
+    """Mark order as completed by changing all its orderItem status"""
+
+    def get(self, request, *args, **kwargs):
+        order_id = self.kwargs['pk']
+        order_item_qs = models.OrderItem.objects.filter(order_id=order_id)
+        for order_item in order_item_qs:
+            order_item.finished = True
+            order_item.save()
+        return redirect('orderItem-list', order_id)

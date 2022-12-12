@@ -12,15 +12,12 @@ class OrderModelForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['customer', 'expected_delivery_date']
-        widgets = {
-            'expected_delivery_date': date_widget['field']
-        }
 
 
 class OrderUpdateModelForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['completed', 'delivered', 'date_delivered', 'paid', 'date_paid']
+        fields = ['delivered', 'paid']
 
 
 class OrderItemCreateModelForm(forms.ModelForm):
