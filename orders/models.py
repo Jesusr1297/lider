@@ -6,8 +6,6 @@ import datetime
 
 class Customer(models.Model):
     name_company = models.CharField(verbose_name='Nombre/Empresa', max_length=50)
-    email = models.EmailField(verbose_name='Correo', null=True)
-    phone_number = models.CharField(verbose_name='Telefono', max_length=10, validators=[RegexValidator(r'^\d{1,10}$')])
     address = models.CharField(verbose_name='Domicilio', max_length=100, null=True)
     shipping = models.BooleanField(verbose_name='Entrega a domicilio')
 
@@ -21,6 +19,20 @@ class Customer(models.Model):
     @property
     def delivery(self):
         return 'Entrega a Domicilio' if self.shipping else 'Recoge en Tienda'
+
+    @property
+    def contact_list(self):
+        return CustomerContact.objects.filter(company_id=self.id)
+
+
+class CustomerContact(models.Model):
+    company = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    name = models.CharField(verbose_name='Nombre de quien ordena', max_length=50)
+    department = models.CharField(verbose_name='Departamento', null=True, blank=True, max_length=30)
+    contact = models.CharField(verbose_name='Telefono o Correo', max_length=30)
+
+    def __str__(self):
+        return self.name
 
 
 class Lider(models.Model):
@@ -41,6 +53,7 @@ class Lider(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name='Cliente')
+    # contact = models.ForeignKey(CustomerContact, on_delete=models.CASCADE, verbose_name='Quien Ordena')
     date_ordered = models.DateField('Fecha ordenada', auto_now=True)
     expected_delivery_date = models.DateField('Fecha esperada de Entrega',
                                               default=(datetime.datetime.now() + datetime.timedelta(days=3)))
