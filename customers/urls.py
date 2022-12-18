@@ -8,4 +8,5 @@ urlpatterns = [
     path('crear/', views.CustomerCreateView.as_view(), name='customers-create'),
     path('editar/<int:pk>', views.CustomerUpdateView.as_view(), name='customer-update'),
     path('eliminar/<int:pk>', views.CustomerDeleteView.as_view(), name='customer-delete'),
+    path('cliente/<int:pk>/', views.CustomerContactDetailView.as_view(), name='customer-contact-detail'),
 ]

@@ -54,3 +54,8 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         messages.error(self.request, f'Se ha eliminado al cliente: {self.object.name_company}')
         return reverse_lazy('customers')
+
+
+class CustomerContactDetailView(DetailView):
+    model = CustomerContact
+    template_name = 'customers/customer_contact_detail.html'

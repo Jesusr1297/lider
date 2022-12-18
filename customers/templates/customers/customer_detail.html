@@ -15,8 +15,9 @@
                     <div class="mb-4">
                         <p class="leading-relaxed">Contactos:</p>
                         <div class="flex flex-wrap justify-around">
-                            {% for customer in customer.contact_list %}
-                                <p class="leading-relaxed border border-inherit p-1 my-1 rounded">{{ customer }}</p>
+                            {% for contact in customer.contact_list %}
+                                <a class="leading-relaxed border border-inherit p-1 my-1 rounded"
+                                href="{% url 'customer-contact-detail' contact.id %}">{{ contact }}</a>
                             {% endfor %}
                         </div>
                     </div>
