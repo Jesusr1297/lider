@@ -59,3 +59,14 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
 class CustomerContactDetailView(DetailView):
     model = CustomerContact
     template_name = 'customers/customer_contact_detail.html'
+
+
+class CustomerContactUpdateView(LoginRequiredMixin, UpdateView):
+    model = CustomerContact
+    template_name = 'customers/customer_contact_form.html'
+    fields = ('name', 'department', 'contact')
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        messages.info(self.request, 'Se ha actualizado el contacto')
+        return reverse_lazy('customer-contact-detail', kwargs={'pk':pk})
