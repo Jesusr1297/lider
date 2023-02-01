@@ -8,19 +8,19 @@ from django.views import generic
 from . import forms, models
 
 
-class OrderListView(generic.ListView):
+class OrderListView(LoginRequiredMixin, generic.ListView):
     model = models.Order
     template_name = 'orders/order_complete_list.html'
     ordering = ['-id']
 
 
-class OrderPendingListView(generic.ListView):
+class OrderPendingListView(LoginRequiredMixin, generic.ListView):
     queryset = models.Order.objects.filter(orderitem__finished=False).distinct()
     template_name = 'orders/order_list.html'
     paginate_by = 10
 
 
-class OrderCreateView(SuccessMessageMixin, generic.CreateView):
+class OrderCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     form_class = forms.OrderModelForm
     template_name = 'orders/order_form.html'
     success_message = 'Se ha creado una nueva orden'
@@ -29,7 +29,7 @@ class OrderCreateView(SuccessMessageMixin, generic.CreateView):
         return reverse_lazy('orderItem-list', kwargs={'pk': self.object.pk})
 
 
-class OrderCreateFromCustomerView(generic.TemplateView):
+class OrderCreateFromCustomerView(LoginRequiredMixin, generic.TemplateView):
     """Create a new order from customer detail view"""
 
     def get(self, request, *args, **kwargs):
@@ -38,12 +38,12 @@ class OrderCreateFromCustomerView(generic.TemplateView):
         return redirect('orderItem-list', new_order.id)
 
 
-class OrderDetailView(generic.DetailView):
+class OrderDetailView(LoginRequiredMixin, generic.DetailView):
     model = models.Order
     template_name = 'orders/order_detail.html'
 
 
-class OrderUpdateView(generic.UpdateView):
+class OrderUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'orders/order_update.html'
     form_class = forms.OrderUpdateModelForm
     model = models.Order
@@ -61,7 +61,7 @@ class OrderDeleteView(LoginRequiredMixin, generic.DeleteView):
         return reverse_lazy('home')
 
 
-class OrderItemListView(generic.TemplateView):
+class OrderItemListView(LoginRequiredMixin, generic.TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = {
@@ -71,7 +71,7 @@ class OrderItemListView(generic.TemplateView):
         return render(request, template_name='orders/orderItem_list.html', context=context)
 
 
-class OrderItemCreateView(generic.FormView):
+class OrderItemCreateView(LoginRequiredMixin, generic.FormView):
     form_class = forms.OrderItemCreateModelForm
     template_name = 'orders/order_form.html'
 
@@ -101,7 +101,7 @@ class OrderItemCreateView(generic.FormView):
         return reverse_lazy('orderItem-list', kwargs={'pk': self.kwargs['pk']})
 
 
-class OrderItemUpdateView(generic.UpdateView):
+class OrderItemUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'orders/orderItem_update.html'
     form_class = forms.OrderItemUpdateModelForm
     model = models.OrderItem
@@ -120,7 +120,7 @@ class OrderItemDeleteView(LoginRequiredMixin, generic.DeleteView):
         return reverse_lazy('orderItem-list', kwargs={'pk': order_id})
 
 
-class OrderMarkAsCompleted(generic.TemplateView):
+class OrderMarkAsCompleted(LoginRequiredMixin, generic.TemplateView):
     """Mark order as completed by changing all its orderItem status"""
 
     def get(self, request, *args, **kwargs):

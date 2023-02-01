@@ -15,14 +15,14 @@ def budget(request):
     return render(request, 'budgets/budget.html')
 
 
-class MaterialsView(generic.ListView):
+class MaterialsView(LoginRequiredMixin, generic.ListView):
     model = Material
     template_name = 'materials/material_list.html'
     ordering = ('id',)
     paginate_by = 5
 
 
-class MaterialsCreateView(SuccessMessageMixin, generic.CreateView):
+class MaterialsCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     model = Material
     template_name = 'budgets/material_form.html'
     success_message = 'Se ha agregado un nuevo material'
@@ -30,7 +30,7 @@ class MaterialsCreateView(SuccessMessageMixin, generic.CreateView):
     success_url = reverse_lazy('material-list')
 
 
-class MaterialUploadXMLView(generic.FormView):
+class MaterialUploadXMLView(LoginRequiredMixin, generic.FormView):
     """ View that handles xml upload and updates material model"""
     form_class = MaterialXMLForm
     template_name = 'materials/materialXML_form.html'
@@ -47,15 +47,14 @@ class MaterialUploadXMLView(generic.FormView):
         return super(MaterialUploadXMLView, self).form_valid(form)
 
 
-class MaterialUploadXMLConfirmView(generic.FormView):
+class MaterialUploadXMLConfirmView(LoginRequiredMixin, generic.FormView):
     # todo
     pass
     # id_list = list_of_ids_from_checkboxes
     # MyModel.objects.filter(id__in=id_list).update(myattribute=True)
 
 
-
-class MaterialsDetailView(generic.DetailView):
+class MaterialsDetailView(LoginRequiredMixin, generic.DetailView):
     model = Material
     template_name = 'budgets/material_detail.html'
 
@@ -69,7 +68,7 @@ class MaterialsDeleteView(LoginRequiredMixin, generic.DeleteView):
         return reverse_lazy('material-list')
 
 
-class MaterialUpdateView(generic.UpdateView):
+class MaterialUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Material
     fields = '__all__'
     template_name = 'budgets/material_update.html'

@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -8,12 +9,12 @@ from orders.models import Supplier
 from .forms import SupplierModelForm
 
 
-class SupplierListView(generic.ListView):
+class SupplierListView(LoginRequiredMixin, generic.ListView):
     model = Supplier
     template_name = 'suppliers/supplier_list.html'
 
 
-class SupplierDetailView(generic.DetailView):
+class SupplierDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'suppliers/supplier_detail.html'
     model = Supplier
     #
@@ -22,8 +23,7 @@ class SupplierDetailView(generic.DetailView):
     #     return Supplier.objects.get(id=self.kwargs['pk'])
 
 
-
-class SupplierCreateView(generic.CreateView):
+class SupplierCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = SupplierModelForm
     template_name = 'suppliers/supplier_create_form.html'
 

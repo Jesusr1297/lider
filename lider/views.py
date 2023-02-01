@@ -9,13 +9,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from orders.models import Lider
 
 
-class LiderView(ListView):
+class LiderView(LoginRequiredMixin, ListView):
     model = Lider
     template_name = 'lider/lider_list.html'
     ordering = ['-lider_id']
 
 
-class LiderCreateView(SuccessMessageMixin, CreateView):
+class LiderCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Lider
     template_name = 'lider/lider_form.html'
     success_message = 'Se ha creado un nuevo LIDER'
@@ -23,12 +23,12 @@ class LiderCreateView(SuccessMessageMixin, CreateView):
     fields = '__all__'
 
 
-class LiderDetailView(DetailView):
+class LiderDetailView(LoginRequiredMixin, DetailView):
     model = Lider
     template_name = 'lider/lider_detail.html'
 
 
-class LiderUpdateView(UpdateView):
+class LiderUpdateView(LoginRequiredMixin, UpdateView):
     model = Lider
     template_name = 'lider/lider_update.html'
     fields = '__all__'

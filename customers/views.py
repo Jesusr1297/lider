@@ -7,14 +7,14 @@ from django.views.generic import ListView, UpdateView, CreateView, DetailView, D
 from orders.models import *
 
 
-class CustomersView(ListView):
+class CustomersView(LoginRequiredMixin, ListView):
     model = Customer
     template_name = 'customers/customers.html'
     ordering = ['-id']
     paginate_by = 5
 
 
-class CustomerDetailView(DetailView):
+class CustomerDetailView(LoginRequiredMixin, DetailView):
     model = Customer
     template_name = 'customers/customer_detail.html'
 
@@ -29,7 +29,7 @@ class CustomerDetailView(DetailView):
         return context
 
 
-class CustomerCreateView(SuccessMessageMixin, CreateView):
+class CustomerCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Customer
     template_name = 'customers/customer_form.html'
     fields = '__all__'
@@ -37,7 +37,7 @@ class CustomerCreateView(SuccessMessageMixin, CreateView):
     success_message = 'Se ha creado un nuevo cliente'
 
 
-class CustomerUpdateView(UpdateView):
+class CustomerUpdateView(LoginRequiredMixin, UpdateView):
     model = Customer
     template_name = 'customers/customer_update.html'
     fields = '__all__'
@@ -56,7 +56,7 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('customers')
 
 
-class CustomerContactDetailView(DetailView):
+class CustomerContactDetailView(LoginRequiredMixin, DetailView):
     model = CustomerContact
     template_name = 'customers/customer_contact_detail.html'
 
