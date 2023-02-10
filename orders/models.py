@@ -63,6 +63,7 @@ class Order(models.Model):
     paid = models.DateField(verbose_name='Fecha de Pago', null=True, blank=True)
 
     invoice = models.IntegerField(verbose_name='Factura Asociada', null=True, blank=True)
+    comment = models.TextField(verbose_name='Comentarios', blank=True, null=True)
 
     def __str__(self):
         return f'{self.id:03d} - {self.customer}'
@@ -101,6 +102,7 @@ class OrderItem(models.Model):
     finished = models.BooleanField('Terminado')
     unit_price = models.DecimalField(null=True, blank=True, max_digits=6, decimal_places=4,
                                      verbose_name='Precio Unitario')
+    comment = models.TextField(null=True, blank=True)
 
     @property
     def status(self):
