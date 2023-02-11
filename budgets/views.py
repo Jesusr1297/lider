@@ -11,6 +11,10 @@ from orders.models import Material
 from .utils import xml_to_model
 
 
+class BudgetsView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'budgets/budget.html'
+
+
 def budget(request):
     return render(request, 'budgets/budget.html')
 
