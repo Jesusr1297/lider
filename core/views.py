@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -11,6 +11,15 @@ from orders import models
 
 class LandingPageView(generic.TemplateView):
     template_name = 'landing.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('auth-home')
+        return super().dispatch(request, *args, **kwargs)
+
+
+class AuthenticatedLandingPage(generic.TemplateView):
+    template_name = 'auth_landing.html'
 
 
 class SignUpView(SuccessMessageMixin, generic.CreateView):
