@@ -20,6 +20,13 @@ class LandingPageView(generic.TemplateView):
 
 class AuthenticatedLandingPage(generic.TemplateView):
     template_name = 'auth_landing.html'
+    context_object_name = 'name'
+
+    def get_context_data(self, **kwargs):
+        context = super(AuthenticatedLandingPage, self).get_context_data(**kwargs)
+        context['num_customers'] = models.Customer.objects.count()
+        context['num_pending_orders'] = models.Order.objects.count()
+        return context
 
 
 class SignUpView(SuccessMessageMixin, generic.CreateView):
