@@ -41,13 +41,12 @@ class MaterialUploadXMLView(LoginRequiredMixin, generic.FormView):
     model = Material
 
     def get_success_url(self):
-        messages.success(self.request, 'material agregado con éxito')
         return reverse('material-list')
 
     def form_valid(self, form):
         # if form is valid we extract xml file and upload data to model
         xml = form.cleaned_data['xml']
-        xml_to_model(xml, self.model)
+        xml_to_model(xml, self.model, self.request)
         return super(MaterialUploadXMLView, self).form_valid(form)
 
 
