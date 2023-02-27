@@ -69,4 +69,4 @@ class CustomerContactUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         pk = self.kwargs['pk']
         messages.info(self.request, 'Se ha actualizado el contacto')
-        return reverse_lazy('customer-contact-detail', kwargs={'pk':pk})
+        return reverse_lazy('customer-contact-detail', kwargs={'pk': pk})
