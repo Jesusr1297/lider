@@ -15,8 +15,9 @@
                                  class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                                  src="https://dummyimage.com/80x80">
                             <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium">{{ lider.lider_id }} - {{ lider.doc_description|lower }}</h2>
-                                <p>{{ lider.customer }}</p>
+                                <p class="font-semibold">{{ lider.customer }}</p>
+                                <p class="font-bold">{{ lider.lider_id }} - {{ lider.doc_name|lower }}</p>
+                                <p class="font-light">{{ lider.doc_description }}</p>
                                 <a href="{% url 'lider-detail' lider.pk  %}"
                                    class="text-indigo-600 hover:text-blue-500">Detalle</a>
                             </div>
