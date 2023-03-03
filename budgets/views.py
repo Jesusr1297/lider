@@ -28,7 +28,7 @@ class MaterialsView(LoginRequiredMixin, generic.ListView):
 
 class MaterialsCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     model = Material
-    template_name = 'budgets/material_form.html'
+    template_name = 'materials/material_form.html'
     success_message = 'Se ha agregado un nuevo material'
     fields = '__all__'
     success_url = reverse_lazy('material-list')
@@ -59,12 +59,12 @@ class MaterialUploadXMLConfirmView(LoginRequiredMixin, generic.FormView):
 
 class MaterialsDetailView(LoginRequiredMixin, generic.DetailView):
     model = Material
-    template_name = 'budgets/material_detail.html'
+    template_name = 'budgets/templates/materials/material_detail.html'
 
 
 class MaterialsDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Material
-    template_name = 'budgets/material_confirm_delete.html'
+    template_name = 'budgets/templates/materials/material_confirm_delete.html'
 
     def get_success_url(self):
         messages.error(self.request, f'Se ha eliminado el material: {self.object.name}')
@@ -74,7 +74,7 @@ class MaterialsDeleteView(LoginRequiredMixin, generic.DeleteView):
 class MaterialUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Material
     fields = '__all__'
-    template_name = 'budgets/material_update.html'
+    template_name = 'budgets/templates/materials/material_update.html'
 
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, 'Se ha actualizado el material')
