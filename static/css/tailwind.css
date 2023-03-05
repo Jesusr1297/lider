@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .success {
+        @apply bg-green-light text-green
+    }
+
+    .nav-btn {
+        @apply hover:text-purple hover:bg-purple-light rounded px-2 py-1
+    }
+
+}

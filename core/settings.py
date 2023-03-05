@@ -124,8 +124,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MESSAGE_TAGS = {
     message_constants.DEBUG: 'bg-neutral-50 text-neutral-500',
-    message_constants.INFO: 'bg-blue-50 text-blue-500',
-    message_constants.SUCCESS: 'bg-green-50 text-green-500',
+    message_constants.INFO: 'bg-blue-light text-blue',
+    message_constants.SUCCESS: 'success',
     message_constants.WARNING: 'bg-yellow-50 text-yellow-500',
     message_constants.ERROR: 'bg-red-50 text-red-500',
 
