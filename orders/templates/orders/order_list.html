@@ -6,7 +6,8 @@
                 <div class="w-2/3 flex flex-row-reverse">
                     <h1 class="text-3xl font-medium title-font w-1/2 self-end text-center">Ordenes Pendientes</h1>
                 </div>
-                <a class="grid content-center justify-center w-1/3" href="{% url 'order-create' %}">Nueva Orden</a>
+                <a class="grid content-center justify-center w-1/3 text-purple" href="{% url 'order-create' %}">Nueva
+                    Orden</a>
             </div>
             <div class="min-h-[500px]">
                 <div>
@@ -21,10 +22,10 @@
                             Fecha Ordenada
                         </h1>
                         <h1 class="w-1/6 text-center">
-                            Detalle
+                            Entrega Esperada
                         </h1>
                         <h1 class="w-1/6 text-center">
-                            Otro
+                            Detalle
                         </h1>
                     </div>
                 </div>
@@ -34,11 +35,11 @@
                             <div class="w-1/6 text-center self-center">{{ object.id|stringformat:'04d' }}</div>
                             <div class="w-2/6 text-center self-center">{{ object.customer|lower }}</div>
                             <div class="w-1/6 text-center self-center">{{ object.date_ordered }}</div>
-                            <div class="nav-btn w-1/6 text-center self-center"><a
-                                    href="{% url 'orderItem-list' object.id %}">Ver</a></div>
                             <div class="w-1/6 text-center self-center">
-                                <input name="plan" type="radio">
+                                {{ object.expected_delivery_date }}
                             </div>
+                            <a class="w-1/6 self-center text-center nav-btn"
+                               href="{% url 'orderItem-list' object.id %}">Ver</a>
                         </div>
                     {% endfor %}
                 </div>

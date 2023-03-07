@@ -2,19 +2,19 @@
     <section class="flex justify-center content-end">
         <div class="w-2/3 flex justify-evenly items-center">
             {% if page_obj.has_previous %}
-                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page=1">&laquoPrincipio</a>
-                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                <a class="pag-btn" href="?page=1">&laquoPrincipio</a>
+                <a class="pag-btn" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
             {% else %}
-                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page=1">&laquoPrincipio</a>
-                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded">Anterior</a>
+                <a class="pag-btn" href="?page=1">&laquoPrincipio</a>
+                <a class="pag-btn">Anterior</a>
             {% endif %}
-            {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            <p class="w-24 h-14 text-center inline-flex items-center justify-center text-purple">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</p>
             {% if page_obj.has_next %}
-                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
-                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
+                <a class="pag-btn" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                <a class="pag-btn" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
             {% else %}
-                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded">Siguiente</a>
-                <a class="text-gray-600 bg-gray-100 py-2 px-6 hover:bg-gray-200 rounded" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
+                <a class="pag-btn">Siguiente</a>
+                <a class="pag-btn" href="?page={{ page_obj.paginator.num_pages }}">Final&raquo;</a>
             {% endif %}
         </div>
     </section>
