@@ -17,7 +17,7 @@ class OrderListView(LoginRequiredMixin, generic.ListView):
 class OrderPendingListView(LoginRequiredMixin, generic.ListView):
     queryset = models.Order.objects.filter(orderitem__finished=False).distinct()
     template_name = 'orders/order_list.html'
-    paginate_by = 10
+    paginate_by = 1
 
 
 class OrderCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):

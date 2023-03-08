@@ -1,60 +1,52 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
-            <div class="grid grid-cols-3 text-center w-full mb-5">
-                <a class="grid content-center justify-center" href="{% url 'material-list' %}">Materiales</a>
-                <h1 class=" sm:text-4xl text-3xl font-medium title-font text-gray-900">Cotizaciones</h1>
-                <a class="grid content-center justify-center" href="{% url 'budgets' %}">Nueva Cotizacion</a>
+    <section>
+        <div class="container px-5 mt-24 mx-auto">
+            <div class="flex w-full mb-5 items-center">
+                <a class="w-1/3 text-center text-purple"
+                   href="{% url 'material-list' %}">Materiales</a>
+                <h1 class="w-1/3 text-3xl font-medium title-font text-center">Cotizaciones</h1>
+                <a class="w-1/3 text-center text-purple" href="{% url 'budgets' %}">Nueva
+                    Cotizacion</a>
             </div>
-            <div class="w-full mx-auto overflow-auto">
-                <table class="table-auto w-full text-left whitespace-no-wrap">
-                    <thead>
-                    <tr>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+            <div class="min-h-[500px]">
+                <div>
+                    <div class="bg-purple-light rounded-lg text-purple text-lg py-2 flex justify-between">
+                        <h1 class="w-1/4 text-center">
                             Cotizacion
-                        </th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                        </h1>
+                        <h1 class="w-1/4 text-center">
                             Cliente
-                        </th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                        </h1>
+                        <h1 class="w-1/4 text-center">
                             Fecha
-                        </th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                            Price
-                        </th>
-                        <th class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for object in object_list %}
-                        <tr>
-                            <td class="px-4 py-3">{{ object.id|stringformat:'04d' }}1234</td>
-                            <td class="px-4 py-3">{{ object.customer|lower }}cliente1</td>
-                            <td class="px-4 py-3">{{ object.order.date_ordered }}sep/10/2022</td>
-                            <td><a class="px-4 py-3" href="{% url 'order-detail' object.id %}">Detalle</a></td>
-                            <td class="w-10 text-center">
-                                <input name="plan" type="radio">
-                            </td>
-                        </tr>
-                    {% empty %}
-                        <tr>
-                            <td class="px-4 py-3">1234</td>
-                            <td class="px-4 py-3">cliente1</td>
-                            <td class="px-4 py-3">sep/10/2022</td>
-                            <td><a class="px-4 py-3">Detalle</a></td>
-                            <td class="w-10 text-center">
-                                <input name="plan" type="radio">
-                            </td>
-                        </tr>
-                    {% endfor %}
+                        </h1>
+                        <h1 class="w-1/4 text-center">
+                            Detalle
+                        </h1>
+                    </div>
+                    <div>
+                        {% for object in object_list %}
+                            <div class="py-2 flex items-center">
+                                <div class="w-1/4 text-center">{{ object.id|stringformat:'04d' }}1234</div>
+                                <div class="w-1/4 text-center">{{ object.customer|lower }}cliente1</div>
+                                <div class="w-1/4 text-center">{{ object.order.date_ordered }}sep/10/2022</div>
+                                <a class="w-1/4 text-center" href="{% url 'order-detail' object.id %}">Ver</a>
+                            </div>
+                        {% empty %}
+                            <div class="py-2 flex items-center">
+                                <div class="w-1/4 text-center">1234</div>
+                                <div class="w-1/4 text-center">cliente1</div>
+                                <div class="w-1/4 text-center">sep/10/2022</div>
+                                <a class="w-1/4 text-center nav-btn">Ver</a>
+                            </div>
+                        {% endfor %}
 
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </div>
             <div class="flex pl-4 mt-4 w-full mx-auto">
-                <a class="text-purple-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <a class="text-purple inline-flex items-center md:mb-2 lg:mb-0">Learn More
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                          stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
                         <path d="M5 12h14M12 5l7 7-7 7"></path>

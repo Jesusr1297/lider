@@ -12,7 +12,6 @@
     }
 
     .pag-btn {
-        @apply w-24 h-10 text-gray font-light rounded-md inline-flex items-center justify-center hover:bg-purple-light hover:text-purple
+        @apply w-24 h-10 font-light text-gray rounded-md inline-flex items-center justify-center hover:bg-purple-light hover:text-purple
     }
-
 }
