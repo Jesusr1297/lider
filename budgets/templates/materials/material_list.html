@@ -1,54 +1,50 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
-            <div class="grid grid-cols-3 text-center w-full mb-5 mx-auto">
-                <a class="grid content-center justify-center" href="{% url 'material-create-xml' %}">Agregar materiales
-                    via
-                    XML</a>
-                <h1 class=" sm:text-4xl text-3xl font-medium title-font text-gray-900">Materiales</h1>
-                <a class="grid content-center justify-center" href="{% url 'material-create' %}">Nuevo Material</a>
+    <section>
+        <div class="container px-5 mt-24 mx-auto">
+            <div class="flex w-full mb-5 items-center">
+                <a class="w-1/3 text-center text-purple" href="{% url 'material-create-xml' %}">
+                    Agregar materiales via XML
+                </a>
+                <h1 class="text-3xl font-medium title-font w-1/3 text-center">Materiales</h1>
+                <a class="w-1/3 text-center text-purple" href="{% url 'material-create' %}">Nuevo Material</a>
             </div>
-            <div class="w-full mx-auto overflow-auto">
-                <table class="table-auto w-full text-center whitespace-no-wrap">
-                    <thead>
-                    <tr>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
-                            Material
-                        </th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                            Proveedor
-                        </th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                            Cantidad
-                        </th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                            Precio
-                        </th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                            Precio con IVA
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div class="min-h-[500px]">
+                    <div>
+                        <div class="bg-purple-light rounded-lg text-purple text-lg py-2 flex justify-between">
+                            <h1 class="w-1/6 text-center">
+                                Material
+                            </h1>
+                            <h1 class="w-2/6 text-center">
+                                Proveedor
+                            </h1>
+                            <h1 class="w-1/6 text-center">
+                                Cantidad
+                            </h1>
+                            <h1 class="w-1/6 text-center">
+                                Precio
+                            </h1>
+                            <h1 class="w-1/6 text-center">
+                                Precio con IVA
+                            </h1>
+                        </div>
+                    </div>
+                    <div>
                     {% for object in object_list %}
-                        <tr>
-                            <td class="px-4 py-3">{{ object.name }}</td>
-                            <td class="px-4 py-3"><a
+                        <div class="py-2 flex items-center">
+                            <div class="w-1/6 text-center text-center">{{ object.name }}</div>
+                            <div class="w-2/6 text-center text-center"><a
                                     href="{% url 'suppliers:supplier-detail' object.supplier_id.id %}">{{ object.supplier_id.name }}</a>
-                            </td>
-                            <td class="px-4 py-3">{{ object.quantity_ordered|floatformat:'02g' }}</td>
-                            <td class="px-4 py-3">${{ object.unit_price|floatformat:'02g' }}</td>
-                            <td class="px-4 py-4">${{ object.get_vat_price|floatformat:'02g' }}</td>
-                        </tr>
+                            </div>
+                            <div class="w-1/6 text-center text-center">{{ object.quantity_ordered|floatformat:'02g' }}</div>
+                            <div class="w-1/6 text-center text-center">${{ object.unit_price|floatformat:'02g' }}</div>
+                            <div class="w-1/6 text-center text-center">${{ object.get_vat_price|floatformat:'02g' }}</div>
+                        </div>
                     {% endfor %}
-
-                    </tbody>
-                </table>
+                    </div>
             </div>
             <div class="flex pl-4 mt-4 w-full mx-auto">
-                <a class="text-purple-500 inline-flex items-center md:mb-2 lg:mb-0"
+                <a class="text-purple inline-flex items-center md:mb-2 lg:mb-0"
                    href="{% url 'suppliers:supplier-list' %}">Proveedores
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                          stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
