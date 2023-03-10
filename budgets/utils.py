@@ -36,3 +36,12 @@ def xml_to_model(xml_file, model, request):
         except KeyError:
             messages.add_message(request, messages.WARNING, 'Uno o mas materiales NO agregados')
     return
+
+
+def offset_quote(num_sheets_per_format, num_formats_per_sheet, quantity, num_inks, foliate=False, block=False,
+                 perfored=False):
+    price_per_sheet = None
+    subtotal = (((price_per_sheet * num_sheets_per_format / num_formats_per_sheet) * quantity) + num_inks * 120) * 2.5
+
+    return subtotal + (foliate * 75 * (quantity // 500)) + (block * 37.50 * (quantity // 500)) + (
+            perfored * 37.50 * (quantity // 500))
