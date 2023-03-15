@@ -19,3 +19,5 @@ urlpatterns = [
 
     path('busqueda/', SearchView.as_view(), name='search'),
 ]
+
+handler404 = 'core.views.handler404'

@@ -53,3 +53,7 @@ class SearchView(LoginRequiredMixin, generic.TemplateView):
             context = {'orders': orders, 'customers': customers, 'liders': liders, 'materials': material}
             return render(request, template_name=self.template_name, context=context)
         return render(request, template_name=self.template_name, context={})
+
+
+def handler404(request, exception):
+    return render(request, '404.html', status=404)
