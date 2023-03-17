@@ -39,7 +39,7 @@ class Lider(models.Model):
     lider_id = models.CharField('Numero de Lider', max_length=4,
                                 validators=[RegexValidator(r'^\d{1,10}$')], primary_key=True)
     doc_name = models.CharField(verbose_name='Nombre del Formato', max_length=50)
-    doc_description = models.CharField(verbose_name='Descripcion del formato',
+    doc_description = models.CharField(verbose_name='Descripción del formato',
                                        max_length=250)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default='')
 
@@ -143,6 +143,7 @@ class Material(models.Model):
                                                   ('1.08', '8%'),
                                                   ('1', 'N/A')],
                            default=1.08, verbose_name='Precio con IVA')
+    added = models.DateField(auto_now=True),
 
     @property
     def get_vat_price(self):
